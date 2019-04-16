@@ -1,0 +1,15 @@
+# Ignore the Terraform plan since it might have secret values
+terraform/plan.out
+
+# Ignore the variables passed to the build
+terraform/terraform.tfvars
+
+# Ignore the build state
+terraform/terraform.tfstate
+terraform/.terraform.tfstate.backup
+
+# Terraform's configuration directory
+terraform/.terraform
+
+# Project build tools which are generated on each build
+src/main/tools
