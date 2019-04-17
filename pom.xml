@@ -38,8 +38,11 @@
   <properties>
     <!-- These are the variables that can be set for the deployment/testing -->
     <lambda.region>us-east-1</lambda.region>
-    <dest.s3.bucket>kakadu-jp2s</dest.s3.bucket>
-    <source.s3.bucket>kakadu-converter</source.s3.bucket>
+    <src.s3.bucket>kakadu-converter</src.s3.bucket>
+    <force.destroy.src.bucket>false</force.destroy.src.bucket>
+    <jp2.s3.bucket>kakadu-jp2s</jp2.s3.bucket>
+    <force.destroy.jp2.bucket>false</force.destroy.jp2.bucket>
+    <kakadu.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.layer.versioned.arn>
 
     <!-- Versions of project dependencies -->
     <freelib.utils.version>0.8.8</freelib.utils.version>

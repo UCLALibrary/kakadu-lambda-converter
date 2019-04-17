@@ -1,6 +1,10 @@
 
 package edu.ucla.library.lambda.kakadu.converter;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
@@ -59,7 +63,8 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
 
             if (expectedByteCount == actualByteCount) {
                 LOGGER.debug(MessageCodes.LKC_004, expectedByteCount, actualByteCount);
-                return Boolean.TRUE;
+
+                return convertImage();
             } else {
                 LOGGER.error(MessageCodes.LKC_004, expectedByteCount, actualByteCount);
                 return Boolean.FALSE;
@@ -67,6 +72,34 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
         } catch (final Exception details) {
             LOGGER.error(details, MessageCodes.LKC_003, key, bucket);
             return Boolean.FALSE;
+        }
+    }
+
+    private boolean convertImage() {
+        final ProcessBuilder processBuilder = new ProcessBuilder("/opt/kakadu/kdu_compress", "-v");
+        final BufferedReader inStream;
+        final Process process;
+
+        processBuilder.redirectErrorStream(true);
+
+        try {
+            final StringBuilder buffer = new StringBuilder();
+            String line;
+
+            process = processBuilder.start();
+            inStream = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            while ((line = inStream.readLine()) != null) {
+                buffer.append(line);
+            }
+
+            LOGGER.debug(buffer.toString());
+
+            return process.waitFor() == 0 ? true : false;
+        } catch (final IOException | InterruptedException details) {
+            LOGGER.error(details, details.getMessage());
+
+            return false;
         }
     }
 }
