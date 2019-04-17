@@ -1,10 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>lambda-kakadu-converter</groupId>
-  <artifactId>lambda-kakadu-converter</artifactId>
+  <groupId>edu.ucla.library</groupId>
+  <artifactId>kakadu-lambda-converter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>AWS Lambda Kakadu Converter</name>
+  <name>Kakadu Lambda Converter</name>
+  <description>A AWS Lambda function that converts TIFFs to JP2s using Kakadu</description>
 
   <licenses>
     <license>
@@ -14,14 +15,14 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:uclalibrary/lambda-kakadu-converter.git</connection>
-    <developerConnection>scm:git:git@github.com:uclalibrary/lambda-kakadu-converter.git</developerConnection>
-    <url>git@github.com:uclalibrary/lambda-kakadu-converter.git</url>
+    <connection>scm:git:git@github.com:uclalibrary/kakadu-lambda-converter.git</connection>
+    <developerConnection>scm:git:git@github.com:uclalibrary/kakadu-lambda-converter.git</developerConnection>
+    <url>git@github.com:uclalibrary/kakadu-lambda-converter.git</url>
   </scm>
 
   <issueManagement>
     <system>GitHub</system>
-    <url>https://github.com/uclalibrary/lambda-kakadu-converter/issues</url>
+    <url>https://github.com/uclalibrary/kakadu-lambda-converter/issues</url>
   </issueManagement>
 
   <developers>
@@ -42,7 +43,8 @@
     <force.destroy.src.bucket>false</force.destroy.src.bucket>
     <jp2.s3.bucket>kakadu-jp2s</jp2.s3.bucket>
     <force.destroy.jp2.bucket>false</force.destroy.jp2.bucket>
-    <kakadu.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.layer.versioned.arn>
+    <kakadu.lib.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.lib.layer.versioned.arn>
+    <kakadu.bin.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.bin.layer.versioned.arn>
 
     <!-- Versions of project dependencies -->
     <freelib.utils.version>0.8.8</freelib.utils.version>
@@ -122,12 +124,13 @@
       </resource>
     </resources>
     <plugins>
+      <!-- Run the AWS Maven plug-in with `mvn package aws:deployLambda` -->
       <plugin>
         <groupId>com.github.davidmoten</groupId>
         <artifactId>aws-maven-plugin</artifactId>
         <version>${aws.plugin.version}</version>
         <configuration>
-          <serverId>lambda-kakadu-converter</serverId>
+          <serverId>kakadu-lambda-converter</serverId>
           <artifact>${project.build.directory}/${project.artifactId}-${project.version}.jar</artifact>
           <functionName>KakaduConverter</functionName>
           <region>${terraform.region}</region>
@@ -173,7 +176,7 @@
             <configuration>
               <generatedSourcesDirectory>${project.basedir}/src/main/generated</generatedSourcesDirectory>
               <messageFiles>
-                <messageFile>${project.basedir}/src/main/resources/lambda-kakadu-converter_messages.xml</messageFile>
+                <messageFile>${project.basedir}/src/main/resources/kakadu-lambda-converter_messages.xml</messageFile>
               </messageFiles>
             </configuration>
           </execution>
@@ -232,7 +235,7 @@
         <configuration>
           <environmentVariables>
             <IMAGE_CONTENT_TYPE>image/tiff</IMAGE_CONTENT_TYPE>
-            <DESTINATION_BUCKET>${dest.s3.bucket}</DESTINATION_BUCKET>
+            <DESTINATION_BUCKET>${jp2.s3.bucket}</DESTINATION_BUCKET>
           </environmentVariables>
           <argLine>${jacoco.agent.arg}</argLine>
         </configuration>
