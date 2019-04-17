@@ -78,7 +78,7 @@ resource "aws_lambda_function" "kakadu_converter" {
   runtime       = "java8"
   memory_size   = "1024"
   timeout       = "900"
-  layers        = ["${var.kakadu_layer}"]
+  layers        = ["${var.kakadu_bin_layer}","${var.kakadu_lib_layer}"]
 }
 
 # Create TIFF S3 bucket

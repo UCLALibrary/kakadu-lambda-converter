@@ -9,4 +9,6 @@ jp2_bucket_name = "${jp2.s3.bucket}"
 
 force_destroy_jp2_bucket = "${force.destroy.jp2.bucket}"
 
-kakadu_layer = "${kakadu.layer.versioned.arn}"
+kakadu_bin_layer = "${kakadu.bin.layer.versioned.arn}"
+
+kakadu_lib_layer = "${kakadu.lib.layer.versioned.arn}"
