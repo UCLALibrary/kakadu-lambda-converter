@@ -3,6 +3,7 @@ package edu.ucla.library.lambda.kakadu.converter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -31,9 +32,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
     /* A S3 client for the test to use */
     private AmazonS3 myS3Client = AmazonS3ClientBuilder.standard().build();
 
-    /** Lambda lets us write to the tmp directory, which is 512 MB */
-    private final File myTmpDir = new File("/tmp");
-
+    /* The kakadu image converter */
     private final Kakadu myKakadu;
 
     /**
@@ -60,7 +59,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                 jsonObj = mapper.readValue(aEvent.toJson(), Object.class);
 
                 LOGGER.debug(MessageCodes.LKC_001, mapper.writeValueAsString(jsonObj));
-            } catch (final Exception details) {
+            } catch (final IOException details) {
                 LOGGER.debug(details.getMessage(), details);
             }
         }
@@ -115,7 +114,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                 LOGGER.error(MessageCodes.LKC_004, expectedByteCount, actualByteCount);
                 return Boolean.FALSE;
             }
-        } catch (final Exception details) {
+        } catch (final IOException | InterruptedException details) {
             LOGGER.error(details, MessageCodes.LKC_003, key, bucket);
             return Boolean.FALSE;
         }
