@@ -11,5 +11,7 @@ terraform/.terraform.tfstate.backup
 # Terraform's configuration directory
 terraform/.terraform
 
-# Project build tools which are generated on each build
-src/main/tools
+# Ignore project build tools which are generated on each build;
+# we keep Checkstyle and PMD so they can be picked up by Codacy
+src/main/tools/travis
+src/main/tools/eclipse

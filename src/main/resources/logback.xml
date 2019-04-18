@@ -21,6 +21,7 @@
   <logger name="com.amazonaws.AmazonWebServiceClient" level="WARN" />
   <logger name="com.amazonaws.metrics.AwsSdkMetrics" level="WARN" />
   <logger name="com.amazonaws.services.s3.model.transform" level="WARN" />
+  <logger name="com.amazonaws.monitoring.CsmConfigurationProviderChain" level="WARN" />
 
   <root level="DEBUG">
     <appender-ref ref="STDOUT"/>

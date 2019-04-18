@@ -5,6 +5,10 @@ package edu.ucla.library.lambda.kakadu.converter;
 final public class MessageCodes {
 
 	/**
+	 * Message: Failed to convert TIFF to JP2: {}
+	 */
+	public static final String LKC_006 = "LKC-006";
+	/**
 	 * Message: Byte array is {} bytes long
 	 */
 	public static final String LKC_005 = "LKC-005";
@@ -29,6 +33,10 @@ final public class MessageCodes {
 	 * Message: {}
 	 */
 	public static final String LKC_000 = "LKC-000";
+	/**
+	 * Message: File doesn't exist and can't be written: {}
+	 */
+	public static final String LKC_007 = "LKC-007";
 
 	private MessageCodes() {
 		super();
