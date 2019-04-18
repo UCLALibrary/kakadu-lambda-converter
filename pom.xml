@@ -238,7 +238,6 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <environmentVariables>
-            <IMAGE_CONTENT_TYPE>image/tiff</IMAGE_CONTENT_TYPE>
             <DESTINATION_BUCKET>${jp2.s3.bucket}</DESTINATION_BUCKET>
             <AWS_REGION>us-east-1</AWS_REGION>
           </environmentVariables>

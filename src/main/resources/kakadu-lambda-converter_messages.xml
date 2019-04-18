@@ -14,4 +14,6 @@
   <entry key="LKC-005">Byte array is {} bytes long</entry>
   <entry key="LKC-006">Failed to convert TIFF to JP2: {}</entry>
   <entry key="LKC-007">File doesn't exist and can't be written: {}</entry>
+  <entry key="LKC-008">Successfully uploaded '{}' to: s3://{}/{}</entry>
+  <entry key="LKC-009">Conversion process returned an empty JP2: {}</entry>
 </properties>
