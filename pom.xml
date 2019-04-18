@@ -137,6 +137,10 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -236,6 +240,7 @@
           <environmentVariables>
             <IMAGE_CONTENT_TYPE>image/tiff</IMAGE_CONTENT_TYPE>
             <DESTINATION_BUCKET>${jp2.s3.bucket}</DESTINATION_BUCKET>
+            <AWS_REGION>us-east-1</AWS_REGION>
           </environmentVariables>
           <argLine>${jacoco.agent.arg}</argLine>
         </configuration>
