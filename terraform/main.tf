@@ -79,19 +79,25 @@ resource "aws_lambda_function" "kakadu_converter" {
   memory_size   = "1024"
   timeout       = "900"
   layers        = ["${var.kakadu_bin_layer}","${var.kakadu_lib_layer}"]
+
+  environment {
+    variables = {
+      DESTINATION_BUCKET = "${var.jp2_bucket_name}"
+    }
+  }
 }
 
 # Create TIFF S3 bucket
 resource "aws_s3_bucket" "source_bucket" {
-  bucket = "${var.src_bucket_name}"
-  region = "${var.region}"
+  bucket        = "${var.src_bucket_name}"
+  region        = "${var.region}"
   force_destroy = "${var.force_destroy_src_bucket}"
 }
 
 # Create JP2 S3 bucket
 resource "aws_s3_bucket" "jp2_bucket" {
-  bucket = "${var.jp2_bucket_name}"
-  region = "${var.region}"
+  bucket        = "${var.jp2_bucket_name}"
+  region        = "${var.region}"
   force_destroy = "${var.force_destroy_jp2_bucket}"
 }
 

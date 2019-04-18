@@ -34,6 +34,14 @@ final public class MessageCodes {
 	 */
 	public static final String LKC_000 = "LKC-000";
 	/**
+	 * Message: Conversion process returned an empty JP2: {}
+	 */
+	public static final String LKC_009 = "LKC-009";
+	/**
+	 * Message: Successfully uploaded '{}' to: s3://{}/{}
+	 */
+	public static final String LKC_008 = "LKC-008";
+	/**
 	 * Message: File doesn't exist and can't be written: {}
 	 */
 	public static final String LKC_007 = "LKC-007";

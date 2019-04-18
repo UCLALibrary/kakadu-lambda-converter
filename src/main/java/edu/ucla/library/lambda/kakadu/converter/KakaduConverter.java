@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
@@ -12,6 +14,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,6 +31,8 @@ import info.freelibrary.util.LoggerFactory;
 public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KakaduConverter.class, Constants.MESSAGES);
+
+    private static final String JP2_EXT = ".jp2";
 
     /* A S3 client for the test to use */
     private AmazonS3 myS3Client = AmazonS3ClientBuilder.standard().build();
@@ -77,15 +82,15 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
             final ObjectMetadata s3Metadata = s3Object.getObjectMetadata();
             final byte[] objectBytes = IOUtils.readBytes(s3ObjStream);
             final long expectedByteCount = s3Metadata.getContentLength();
-            final long actualByteCount = objectBytes.length;
+            final long contentLength = objectBytes.length;
             final FileOutputStream fileOutStream;
             final File tiffFile;
             final File jp2File;
 
             IOUtils.closeQuietly(s3ObjStream);
 
-            if (expectedByteCount == actualByteCount) {
-                LOGGER.debug(MessageCodes.LKC_004, expectedByteCount, actualByteCount);
+            if (expectedByteCount == contentLength) {
+                LOGGER.debug(MessageCodes.LKC_004, expectedByteCount, contentLength);
 
                 if (myKakadu.isInstalled()) {
                     final String ext = "." + FileUtils.getExt(key);
@@ -103,19 +108,49 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                     IOUtils.closeQuietly(fileOutStream);
 
                     jp2File = myKakadu.convert(id, tiffFile, Conversion.LOSSLESS);
-                    jp2File.length();
 
-                    return Boolean.TRUE;
+                    if (jp2File.length() > 0) {
+                        return uploadImage(id, jp2File, contentType, contentLength);
+                    } else {
+                        LOGGER.error(MessageCodes.LKC_009, jp2File);
+                        return Boolean.FALSE;
+                    }
                 } else {
                     // The exception is already logged in method: isInstalled()
                     return Boolean.FALSE;
                 }
             } else {
-                LOGGER.error(MessageCodes.LKC_004, expectedByteCount, actualByteCount);
+                LOGGER.error(MessageCodes.LKC_004, expectedByteCount, contentLength);
                 return Boolean.FALSE;
             }
         } catch (final IOException | InterruptedException details) {
             LOGGER.error(details, MessageCodes.LKC_003, key, bucket);
+            return Boolean.FALSE;
+        }
+    }
+
+    private boolean uploadImage(final String aID, final File aJP2File, final String aContentType,
+            final long aContentLength) {
+        final String jp2Bucket = System.getenv(Constants.DESTINATION_BUCKET);
+        final String jp2S3Key = aID + JP2_EXT;
+        final PutObjectRequest request = new PutObjectRequest(jp2Bucket, jp2S3Key, aJP2File);
+        final ObjectMetadata metadata = new ObjectMetadata();
+
+        metadata.setContentType(aContentType);
+        metadata.setContentLength(aContentLength);
+        request.setMetadata(metadata);
+
+        try {
+            myS3Client.putObject(request);
+
+            LOGGER.info(MessageCodes.LKC_008, aID, jp2Bucket, jp2S3Key);
+
+            return Boolean.TRUE;
+        } catch (final AmazonServiceException details) {
+            LOGGER.error(details, details.getMessage());
+            return Boolean.FALSE;
+        } catch (final SdkClientException details) {
+            LOGGER.error(details, details.getMessage());
             return Boolean.FALSE;
         }
     }
