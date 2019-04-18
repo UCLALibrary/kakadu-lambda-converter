@@ -12,4 +12,6 @@
     as this function</entry>
   <entry key="LKC-004">Retrieved object's metadata says it is {} bytes long and it is {} bytes long</entry>
   <entry key="LKC-005">Byte array is {} bytes long</entry>
+  <entry key="LKC-006">Failed to convert TIFF to JP2: {}</entry>
+  <entry key="LKC-007">File doesn't exist and can't be written: {}</entry>
 </properties>

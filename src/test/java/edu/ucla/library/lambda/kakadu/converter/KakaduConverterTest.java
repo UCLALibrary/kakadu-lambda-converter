@@ -2,6 +2,7 @@
 package edu.ucla.library.lambda.kakadu.converter;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -31,7 +33,9 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 @RunWith(MockitoJUnitRunner.class)
 public class KakaduConverterTest {
 
-    private static final String FILE_NAME = "test.tif";
+    private static final String TIFF_FILE_NAME = "test.tif";
+
+    private static final String JP2_FILE_NAME = "test.jp2";
 
     private static final String CONTENT_TYPE = "image/tif";
 
@@ -43,14 +47,18 @@ public class KakaduConverterTest {
     @Mock
     private S3Object myS3Object;
 
+    @Mock
+    private Kakadu myKakadu;
+
     @Captor
     private ArgumentCaptor<GetObjectRequest> myGetObjectRequest;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, InterruptedException {
         myEvent = TestUtils.parse("/s3-event.put.json", S3Event.class);
 
-        final File testTiff = new File("src/test/resources/images/" + FILE_NAME);
+        final File jp2File = new File("src/test/resources/images/" + JP2_FILE_NAME);
+        final File testTiff = new File("src/test/resources/images/" + TIFF_FILE_NAME);
         final FileInputStream fileStream = new FileInputStream(testTiff);
         final S3ObjectInputStream inputStream = new S3ObjectInputStream(fileStream, new HttpGet());
         final ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -60,7 +68,10 @@ public class KakaduConverterTest {
 
         when(myS3Object.getObjectContent()).thenReturn(inputStream);
         when(myS3Object.getObjectMetadata()).thenReturn(objectMetadata);
+        when(myKakadu.isInstalled()).thenReturn(true);
         when(myS3Client.getObject(myGetObjectRequest.capture())).thenReturn(myS3Object);
+        when(myKakadu.convert(any(String.class), ArgumentMatchers.any(File.class), any(Conversion.class))).thenReturn(
+                jp2File);
     }
 
     private Context createContext() {
@@ -73,7 +84,7 @@ public class KakaduConverterTest {
 
     @Test
     public void testKakaduConverter() {
-        final KakaduConverter handler = new KakaduConverter(myS3Client);
+        final KakaduConverter handler = new KakaduConverter(myS3Client, myKakadu);
         final Context context = createContext();
 
         assertTrue(handler.handleRequest(myEvent, context));

@@ -47,7 +47,7 @@
     <kakadu.bin.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.bin.layer.versioned.arn>
 
     <!-- Versions of project dependencies -->
-    <freelib.utils.version>0.8.8</freelib.utils.version>
+    <freelib.utils.version>0.8.9</freelib.utils.version>
     <lambda.logging.version>1.0.0</lambda.logging.version>
     <lambda.events.version>2.2.6</lambda.events.version>
     <lambda.core.version>1.2.0</lambda.core.version>
