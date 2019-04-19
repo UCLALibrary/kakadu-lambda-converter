@@ -13,6 +13,10 @@ final public class MessageCodes {
 	 */
 	public static final String LKC_005 = "LKC-005";
 	/**
+	 * Message: Error converting image to JP2: {}
+	 */
+	public static final String LKC_111 = "LKC-111";
+	/**
 	 * Message: Retrieved object's metadata says it is {} bytes long and it is {} bytes long
 	 */
 	public static final String LKC_004 = "LKC-004";
@@ -41,6 +45,10 @@ final public class MessageCodes {
 	 * Message: Successfully uploaded '{}' to: s3://{}/{}
 	 */
 	public static final String LKC_008 = "LKC-008";
+	/**
+	 * Message: S3 object '{}' could not be written to the file system: {}
+	 */
+	public static final String LKC_010 = "LKC-010";
 	/**
 	 * Message: File doesn't exist and can't be written: {}
 	 */
