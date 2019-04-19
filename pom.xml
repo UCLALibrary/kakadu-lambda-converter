@@ -52,6 +52,7 @@
     <lambda.events.version>2.2.6</lambda.events.version>
     <lambda.core.version>1.2.0</lambda.core.version>
     <aws.sdk.version>1.11.534</aws.sdk.version>
+    <jackson.version>2.9.8</jackson.version>
 
     <!-- Versions of test dependencies -->
     <mockito.version>2.27.0</mockito.version>
@@ -70,6 +71,16 @@
       <groupId>info.freelibrary</groupId>
       <artifactId>freelib-utils</artifactId>
       <version>${freelib.utils.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>io.symphonia</groupId>
