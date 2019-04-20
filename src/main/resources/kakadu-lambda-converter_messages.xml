@@ -16,4 +16,6 @@
   <entry key="LKC-007">File doesn't exist and can't be written: {}</entry>
   <entry key="LKC-008">Successfully uploaded '{}' to: s3://{}/{}</entry>
   <entry key="LKC-009">Conversion process returned an empty JP2: {}</entry>
+  <entry key="LKC-010">S3 object '{}' could not be written to the file system: {}</entry>
+  <entry key="LKC-111">Error converting image to JP2: {}</entry>
 </properties>

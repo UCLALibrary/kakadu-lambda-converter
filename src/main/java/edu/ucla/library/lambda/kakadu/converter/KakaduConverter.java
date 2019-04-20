@@ -102,17 +102,28 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                         id = FileUtils.stripExt(key);
                     }
 
-                    tiffFile = new File(Kakadu.TMP_DIR, id + ext);
-                    fileOutStream = new FileOutputStream(tiffFile);
-                    fileOutStream.write(objectBytes);
-                    IOUtils.closeQuietly(fileOutStream);
+                    tiffFile = new File(Kakadu.TMP_DIR, new File(id + ext).getName());
 
-                    jp2File = myKakadu.convert(id, tiffFile, Conversion.LOSSLESS);
+                    try {
+                        fileOutStream = new FileOutputStream(tiffFile);
+                        fileOutStream.write(objectBytes);
+                        IOUtils.closeQuietly(fileOutStream);
 
-                    if (jp2File.length() > 0) {
-                        return uploadImage(id, jp2File, contentType, contentLength);
-                    } else {
-                        LOGGER.error(MessageCodes.LKC_009, jp2File);
+                        try {
+                            jp2File = myKakadu.convert(id, tiffFile, Conversion.LOSSLESS);
+
+                            if (jp2File.length() > 0) {
+                                return uploadImage(id, jp2File, contentType, contentLength);
+                            } else {
+                                LOGGER.error(MessageCodes.LKC_009, jp2File);
+                                return Boolean.FALSE;
+                            }
+                        } catch (final IOException | InterruptedException details) {
+                            LOGGER.error(details, MessageCodes.LKC_111, tiffFile);
+                            return Boolean.FALSE;
+                        }
+                    } catch (final IOException details) {
+                        LOGGER.error(details, MessageCodes.LKC_010, id, tiffFile);
                         return Boolean.FALSE;
                     }
                 } else {
@@ -123,7 +134,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                 LOGGER.error(MessageCodes.LKC_004, expectedByteCount, contentLength);
                 return Boolean.FALSE;
             }
-        } catch (final IOException | InterruptedException details) {
+        } catch (final IOException details) {
             LOGGER.error(details, MessageCodes.LKC_003, key, bucket);
             return Boolean.FALSE;
         }
