@@ -8,7 +8,9 @@ The kakadu-lambda-converter function can be built using the standard Maven mecha
 
     mvn package
 
-Before you do that though, you'll want to set four properties: `lambda.cred.profile`, `lambda.region`, `src.s3.bucket`, and `jp2.s3.bucket`. These can be set at the point of building the project using the Maven [settings.xml](https://maven.apache.org/settings.html) file or by passing the values to the build on the command line (e.g., `mvn -Dlambda.cred.profile="converter-profile" -Dlambda.region="us-east-1" -Dsrc.s3.bucket="source-bucket-name" -Djp2.s3.bucket="jp2-bucket-name" package`). When you've supplied values for those properties and built the project you will have a Jar file that can then be uploaded to AWS Lambda. The `lambda.cred.profile`, in case it's not clear, refers to an AWS profile defined in your user's `~/.aws/credentials` file. It should be a profile that has the privileges necessary to create resources within your AWS account.
+Before you do that though, you'll want to set four properties: `lambda.cred.profile`, `lambda.region`, `src.s3.bucket`, and `jp2.s3.bucket`. These can be set at the point of building the project using the Maven [settings.xml](https://maven.apache.org/settings.html) file or by passing the values to the build on the command line (e.g., `mvn -Dlambda.cred.profile="converter-profile" -Dlambda.region="us-east-1" -Dsrc.s3.bucket="source-bucket-name" -Djp2.s3.bucket="jp2-bucket-name" package`). When you've supplied values for these properties and built the project, you will have a Jar file that can then be uploaded to AWS Lambda.
+
+The `lambda.cred.profile`, in case it's not clear, refers to an AWS profile defined in your user's `~/.aws/credentials` file. It should be a profile that has the privileges necessary to create resources within your AWS account.
 
 ### Initial deployment
 
