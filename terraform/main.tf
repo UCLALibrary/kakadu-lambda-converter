@@ -4,6 +4,7 @@
 
 provider "aws" {
   region  = "${var.region}"
+  profile = "${var.cred_profile}"
 }
 
 # TODO: Most of the IAM rules could use tightening up
@@ -71,7 +72,7 @@ resource "aws_cloudwatch_log_group" "kakadu-converter-log-group" {
 
 # Create converter Lambda function
 resource "aws_lambda_function" "kakadu_converter" {
-  filename      = "../target/lambda-kakadu-converter-0.0.1-SNAPSHOT.jar"
+  filename      = "../target/${var.project_artifactId}-${var.project_version}.jar"
   function_name = "KakaduConverter"
   role          = "${aws_iam_role.iam_for_lambda.arn}"
   handler       = "edu.ucla.library.lambda.kakadu.converter.KakaduConverter"

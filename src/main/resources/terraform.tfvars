@@ -12,3 +12,9 @@ force_destroy_jp2_bucket = "${force.destroy.jp2.bucket}"
 kakadu_bin_layer = "${kakadu.bin.layer.versioned.arn}"
 
 kakadu_lib_layer = "${kakadu.lib.layer.versioned.arn}"
+
+cred_profile = "${lambda.cred_profile}"
+
+project_artifactId = "${project.artifactId}"
+
+project_version = "${project.version}"
