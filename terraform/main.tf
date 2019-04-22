@@ -63,7 +63,7 @@ resource "aws_lambda_permission" "allow_bucket" {
   source_arn    = "${aws_s3_bucket.source_bucket.arn}"
 }
 
-# Create CloudWatch log group
+# Create CloudWatch log group using the name Lambda expects
 resource "aws_cloudwatch_log_group" "kakadu-converter-log-group" {
   name              = "/aws/lambda/${aws_lambda_function.kakadu_converter.function_name}"
   retention_in_days = 14

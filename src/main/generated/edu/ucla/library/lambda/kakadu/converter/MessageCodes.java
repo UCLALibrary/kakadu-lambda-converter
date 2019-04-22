@@ -9,6 +9,10 @@ final public class MessageCodes {
 	 */
 	public static final String LKC_006 = "LKC-006";
 	/**
+	 * Message: Kakadu output: {}
+	 */
+	public static final String LKC_112 = "LKC-112";
+	/**
 	 * Message: Byte array is {} bytes long
 	 */
 	public static final String LKC_005 = "LKC-005";

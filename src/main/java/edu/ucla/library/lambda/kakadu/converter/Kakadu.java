@@ -1,9 +1,12 @@
 
 package edu.ucla.library.lambda.kakadu.converter;
 
+import static edu.ucla.library.lambda.kakadu.converter.Constants.MESSAGES;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -11,9 +14,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.Logger;
 import info.freelibrary.util.LoggerFactory;
+import info.freelibrary.util.LoggerMarker;
 
 /**
  * The Kakadu TIFF to JP2 image converter.
@@ -24,9 +31,7 @@ public class Kakadu {
 
     public static final String TMP_DIR = System.getProperty("java.io.tmpdir");
 
-    private static final String EOL = System.lineSeparator();
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Kakadu.class, Constants.MESSAGES);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Kakadu.class, MESSAGES);
 
     private static final String KAKADU_COMMAND = "kdu_compress";
 
@@ -112,35 +117,37 @@ public class Kakadu {
      */
     private void run(final ProcessBuilder aProcessBuilder, final String aID, final Logger aLogger) throws IOException,
             InterruptedException {
+        final Marker marker = MarkerFactory.getMarker(LoggerMarker.EOL_TO_SPACE);
         final Process process = aProcessBuilder.start();
 
         if (process.waitFor() != 0) {
-            aLogger.error(getMessage(new BufferedReader(new InputStreamReader(process.getErrorStream()))));
+            aLogger.error(marker, MessageCodes.LKC_112, getMessage(process.getErrorStream()));
             throw new IOException(aLogger.getMessage(MessageCodes.LKC_006, aID));
         } else if (aLogger.isDebugEnabled()) {
-            aLogger.debug(getMessage(new BufferedReader(new InputStreamReader(process.getInputStream()))));
+            aLogger.debug(marker, MessageCodes.LKC_112, getMessage(process.getInputStream()));
         }
     }
 
     /**
      * A convenience method to simplify String reading.
      *
-     * @param aReader A buffered reader from which to read
+     * @param aInputStream A buffered reader from which to read
      * @return The string that was read
      * @throws IOException If there is trouble reading from the supplied reader
      */
-    private String getMessage(final BufferedReader aReader) throws IOException {
+    private String getMessage(final InputStream aInputStream) throws IOException {
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(aInputStream));
         final StringBuilder buffer = new StringBuilder();
 
         // Read in one line at a time, adding EOL characters for readability
         String line;
 
-        while ((line = aReader.readLine()) != null) {
-            buffer.append(line).append(EOL);
+        while ((line = reader.readLine()) != null) {
+            buffer.append(line).append(System.lineSeparator());
         }
 
         // Clean up the reader without caring if it throws exceptions on close
-        IOUtils.closeQuietly(aReader);
+        IOUtils.closeQuietly(reader);
 
         return buffer.toString();
     }
