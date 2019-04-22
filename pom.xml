@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>edu.ucla.library</groupId>
   <artifactId>kakadu-lambda-converter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -45,23 +46,19 @@
     <force.destroy.jp2.bucket>false</force.destroy.jp2.bucket>
     <kakadu.lib.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.lib.layer.versioned.arn>
     <kakadu.bin.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.bin.layer.versioned.arn>
-
     <!-- Versions of project dependencies -->
-    <freelib.utils.version>0.8.9</freelib.utils.version>
+    <freelib.utils.version>0.8.10</freelib.utils.version>
     <lambda.logging.version>1.0.0</lambda.logging.version>
     <lambda.events.version>2.2.6</lambda.events.version>
     <lambda.core.version>1.2.0</lambda.core.version>
     <aws.sdk.version>1.11.534</aws.sdk.version>
     <jackson.version>2.9.8</jackson.version>
-
     <!-- Versions of test dependencies -->
     <mockito.version>2.27.0</mockito.version>
-
     <!-- Versions of plug-ins -->
     <aws.plugin.version>0.2.18</aws.plugin.version>
     <shade.plugin.version>3.0.0</shade.plugin.version>
     <codacy.plugin.version>1.0.2</codacy.plugin.version>
-
     <!-- Build configuration properties -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -86,6 +83,7 @@
       <groupId>io.symphonia</groupId>
       <artifactId>lambda-logging</artifactId>
       <version>${lambda.logging.version}</version>
+      <classifier>no-config</classifier>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -112,7 +110,6 @@
       <artifactId>aws-java-sdk-lambda</artifactId>
       <version>${aws.sdk.version}</version>
     </dependency>
-
     <!-- Test dependencies -->
     <dependency>
       <groupId>junit</groupId>
@@ -250,7 +247,8 @@
         <configuration>
           <environmentVariables>
             <DESTINATION_BUCKET>${jp2.s3.bucket}</DESTINATION_BUCKET>
-            <AWS_REGION>us-east-1</AWS_REGION>
+            <AWS_REGION>${lambda.region}</AWS_REGION>
+            <CI>true</CI>
           </environmentVariables>
           <argLine>${jacoco.agent.arg}</argLine>
         </configuration>
@@ -269,7 +267,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>3.6.3</version>
+    <version>3.6.4</version>
   </parent>
 
 </project>

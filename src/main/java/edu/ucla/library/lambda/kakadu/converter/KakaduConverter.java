@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -24,14 +27,17 @@ import info.freelibrary.util.FileUtils;
 import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.Logger;
 import info.freelibrary.util.LoggerFactory;
+import info.freelibrary.util.LoggerMarker;
 
 /**
  * An AWS Lambda handler that converts TIFF images in S3 into JP2 images in S3.
  */
 public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
 
+    /** A logger for our function */
     private static final Logger LOGGER = LoggerFactory.getLogger(KakaduConverter.class, Constants.MESSAGES);
 
+    /** The JPEG 2000 extension */
     private static final String JP2_EXT = ".jp2";
 
     /* A S3 client for the test to use */
@@ -57,13 +63,20 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
     public Boolean handleRequest(final S3Event aEvent, final Context aContext) {
         if (LOGGER.isDebugEnabled()) {
             final ObjectMapper mapper = new ObjectMapper();
-            final Object jsonObj;
+            final Object event;
 
             try {
                 mapper.enable(SerializationFeature.INDENT_OUTPUT);
-                jsonObj = mapper.readValue(aEvent.toJson(), Object.class);
+                event = mapper.readValue(aEvent.toJson(), Object.class);
 
-                LOGGER.debug(MessageCodes.LKC_001, mapper.writeValueAsString(jsonObj));
+                // If we're running in a test mode, use a different EOL for the JSON message
+                if (!"true".equals(System.getenv("CI"))) {
+                    final Marker marker = MarkerFactory.getMarker(LoggerMarker.EOL_TO_CR);
+
+                    LOGGER.debug(marker, MessageCodes.LKC_001, mapper.writeValueAsString(event));
+                } else {
+                    LOGGER.debug(MessageCodes.LKC_001, mapper.writeValueAsString(event));
+                }
             } catch (final IOException details) {
                 LOGGER.debug(details.getMessage(), details);
             }
