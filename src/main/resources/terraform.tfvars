@@ -13,7 +13,7 @@ kakadu_bin_layer = "${kakadu.bin.layer.versioned.arn}"
 
 kakadu_lib_layer = "${kakadu.lib.layer.versioned.arn}"
 
-cred_profile = "${lambda.cred_profile}"
+cred_profile = "${lambda.cred.profile}"
 
 project_artifactId = "${project.artifactId}"
 

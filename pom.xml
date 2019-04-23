@@ -40,7 +40,7 @@
   <properties>
     <!-- These are the variables that can be set for the deployment/testing -->
     <lambda.region>us-east-1</lambda.region>
-    <lambda.cred_profile>kakadu-converter</lambda.cred_profile>
+    <lambda.cred.profile>kakadu-converter</lambda.cred.profile>
     <src.s3.bucket>kakadu-converter-tiffs</src.s3.bucket>
     <force.destroy.src.bucket>false</force.destroy.src.bucket>
     <jp2.s3.bucket>kakadu-converter-jp2s</jp2.s3.bucket>
