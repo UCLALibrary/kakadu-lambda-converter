@@ -19,4 +19,6 @@
   <entry key="LKC-010">S3 object '{}' could not be written to the file system: {}</entry>
   <entry key="LKC-111">Error converting image to JP2: {}</entry>
   <entry key="LKC-112">Kakadu output: {}</entry>
+  <entry key="LKC-113">Unable to clean up Lambda function's temporary file: {}</entry>
+  <entry key="LKC-114">Writing temporary TIFF file in Lambda function: {}</entry>
 </properties>

@@ -72,14 +72,16 @@ resource "aws_cloudwatch_log_group" "kakadu-converter-log-group" {
 
 # Create converter Lambda function
 resource "aws_lambda_function" "kakadu_converter" {
-  filename      = "../target/${var.project_artifactId}-${var.project_version}.jar"
-  function_name = "KakaduConverter"
-  role          = "${aws_iam_role.iam_for_lambda.arn}"
-  handler       = "edu.ucla.library.lambda.kakadu.converter.KakaduConverter"
-  runtime       = "java8"
-  memory_size   = "1024"
-  timeout       = "900"
-  layers        = ["${var.kakadu_bin_layer}","${var.kakadu_lib_layer}"]
+  filename          = "../target/${var.project_artifactId}-${var.project_version}.jar"
+  # FIXME? Doesn't seem to be a way to self-reference filename for source_code_hash(?)
+  source_code_hash  = "${filebase64sha256("../target/${var.project_artifactId}-${var.project_version}.jar")}"
+  function_name     = "KakaduConverter"
+  role              = "${aws_iam_role.iam_for_lambda.arn}"
+  handler           = "edu.ucla.library.lambda.kakadu.converter.KakaduConverter"
+  runtime           = "java8"
+  memory_size       = "1024"
+  timeout           = "600"
+  layers            = ["${var.kakadu_bin_layer}","${var.kakadu_lib_layer}"]
 
   environment {
     variables = {

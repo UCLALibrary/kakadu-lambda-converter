@@ -5,6 +5,10 @@ package edu.ucla.library.lambda.kakadu.converter;
 final public class MessageCodes {
 
 	/**
+	 * Message: Unable to clean up Lambda function's temporary file: {}
+	 */
+	public static final String LKC_113 = "LKC-113";
+	/**
 	 * Message: Failed to convert TIFF to JP2: {}
 	 */
 	public static final String LKC_006 = "LKC-006";
@@ -57,6 +61,10 @@ final public class MessageCodes {
 	 * Message: File doesn't exist and can't be written: {}
 	 */
 	public static final String LKC_007 = "LKC-007";
+	/**
+	 * Message: Writing temporary TIFF file in Lambda function: {}
+	 */
+	public static final String LKC_114 = "LKC-114";
 
 	private MessageCodes() {
 		super();
