@@ -57,7 +57,6 @@
     <!-- Versions of test dependencies -->
     <mockito.version>2.27.0</mockito.version>
     <!-- Versions of plug-ins -->
-    <aws.plugin.version>0.2.18</aws.plugin.version>
     <shade.plugin.version>3.0.0</shade.plugin.version>
     <codacy.plugin.version>1.0.2</codacy.plugin.version>
     <!-- Build configuration properties -->
@@ -133,18 +132,6 @@
       </resource>
     </resources>
     <plugins>
-      <!-- Run the AWS Maven plug-in with `mvn package aws:deployLambda` -->
-      <plugin>
-        <groupId>com.github.davidmoten</groupId>
-        <artifactId>aws-maven-plugin</artifactId>
-        <version>${aws.plugin.version}</version>
-        <configuration>
-          <serverId>kakadu-lambda-converter</serverId>
-          <artifact>${project.build.directory}/${project.artifactId}-${project.version}.jar</artifact>
-          <functionName>KakaduConverter</functionName>
-          <region>${terraform.region}</region>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>

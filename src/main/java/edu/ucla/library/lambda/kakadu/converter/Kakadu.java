@@ -35,6 +35,9 @@ public class Kakadu {
 
     private static final String KAKADU_COMMAND = "kdu_compress";
 
+    /** The JPEG 2000 extension */
+    private static final String JP2_EXT = ".jpx";
+
     private static final List<String> BASE_OPTIONS = Arrays.asList("Clevels=6", "Clayers=6",
             "Cprecincts={256,256},{256,256},{128,128}", "Stiles={512,512}", "Corder=RPCL", "ORGgen_plt=yes",
             "ORGtparts=R", "Cblk={64,64}", "Cuse_sop=yes", "Cuse_eph=yes", "-flush_period", "1024");
@@ -59,7 +62,7 @@ public class Kakadu {
      */
     public File convert(final String aID, final File aTIFF, final Conversion aConversion) throws IOException,
             InterruptedException {
-        final File jp2 = new File(TMP_DIR, URLEncoder.encode(aID, StandardCharsets.UTF_8.toString()));
+        final File jp2 = new File(TMP_DIR, URLEncoder.encode(aID, StandardCharsets.UTF_8.toString()) + JP2_EXT);
         final List<String> command = new ArrayList<String>();
         final String conversion = aConversion.name();
 

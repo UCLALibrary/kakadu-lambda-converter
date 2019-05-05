@@ -37,9 +37,6 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
     /** A logger for our function */
     private static final Logger LOGGER = LoggerFactory.getLogger(KakaduConverter.class, Constants.MESSAGES);
 
-    /** The JPEG 2000 extension */
-    private static final String JP2_EXT = ".jp2";
-
     /* A S3 client for the test to use */
     private AmazonS3 myS3Client = AmazonS3ClientBuilder.standard().build();
 
@@ -108,25 +105,30 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                 if (myKakadu.isInstalled()) {
                     final String ext = "." + FileUtils.getExt(key);
 
-                    // Get id from metadata if it has it; else, use the file name minus extension as ID
+                    // Get id from metadata if it has it
                     String id = s3Metadata.getUserMetaDataOf(Constants.ID);
 
+                    // Else, use the file name without path minus its extension as ID
                     if (id == null) {
-                        id = FileUtils.stripExt(key);
+                        id = FileUtils.stripExt(new File(key).getName());
                     }
 
+                    // Warning: Using just file name may result in conflicts for some users?
                     tiffFile = new File(Kakadu.TMP_DIR, new File(id + ext).getName());
+
+                    LOGGER.debug(MessageCodes.LKC_114, tiffFile);
 
                     try {
                         fileOutStream = new FileOutputStream(tiffFile);
                         fileOutStream.write(objectBytes);
+
                         IOUtils.closeQuietly(fileOutStream);
 
                         try {
                             jp2File = myKakadu.convert(id, tiffFile, Conversion.LOSSLESS);
 
                             if (jp2File.length() > 0) {
-                                return uploadImage(id, jp2File, contentType, contentLength);
+                                return uploadImage(jp2File, contentType, contentLength);
                             } else {
                                 LOGGER.error(MessageCodes.LKC_009, jp2File);
                                 return Boolean.FALSE;
@@ -138,6 +140,10 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                     } catch (final IOException details) {
                         LOGGER.error(details, MessageCodes.LKC_010, id, tiffFile);
                         return Boolean.FALSE;
+                    } finally {
+                        if (!FileUtils.delete(tiffFile)) {
+                            LOGGER.error(MessageCodes.LKC_113, tiffFile);
+                        }
                     }
                 } else {
                     // The exception is already logged in method: isInstalled()
@@ -153,11 +159,10 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
         }
     }
 
-    private boolean uploadImage(final String aID, final File aJP2File, final String aContentType,
-            final long aContentLength) {
+    private boolean uploadImage(final File aJP2File, final String aContentType, final long aContentLength) {
         final String jp2Bucket = System.getenv(Constants.DESTINATION_BUCKET);
-        final String jp2S3Key = aID + JP2_EXT;
-        final PutObjectRequest request = new PutObjectRequest(jp2Bucket, jp2S3Key, aJP2File);
+        final String jp2Key = aJP2File.getName();
+        final PutObjectRequest request = new PutObjectRequest(jp2Bucket, jp2Key, aJP2File);
         final ObjectMetadata metadata = new ObjectMetadata();
 
         metadata.setContentType(aContentType);
@@ -167,7 +172,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
         try {
             myS3Client.putObject(request);
 
-            LOGGER.info(MessageCodes.LKC_008, aID, jp2Bucket, jp2S3Key);
+            LOGGER.info(MessageCodes.LKC_008, FileUtils.stripExt(jp2Key), jp2Bucket, jp2Key);
 
             return Boolean.TRUE;
         } catch (final AmazonServiceException details) {
@@ -176,6 +181,10 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
         } catch (final SdkClientException details) {
             LOGGER.error(details, details.getMessage());
             return Boolean.FALSE;
+        } finally {
+            if (!FileUtils.delete(aJP2File)) {
+                LOGGER.error(MessageCodes.LKC_113, aJP2File);
+            }
         }
     }
 

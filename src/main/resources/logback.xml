@@ -2,7 +2,7 @@
 
   <appender name="STDOUT" class="io.symphonia.lambda.logging.DefaultConsoleAppender">
     <encoder>
-      <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %X{AWSRequestId:-"NO_REQUEST_ID"} [%level] %logger{36}:%X{line} - %msg</pattern>
+      <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %X{AWSRequestId:-"NO_REQUEST_ID"} [%level] %logger{36}:%X{line} - %replace(%msg){'\n','&#xd;'} %replace(%exception){'\n','&#xd;'} %nopexception %n</pattern>
     </encoder>
   </appender>
 
