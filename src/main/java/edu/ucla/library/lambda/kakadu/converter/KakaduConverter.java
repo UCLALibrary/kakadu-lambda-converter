@@ -125,7 +125,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                         IOUtils.closeQuietly(fileOutStream);
 
                         try {
-                            jp2File = myKakadu.convert(id, tiffFile, Conversion.LOSSLESS);
+                            jp2File = myKakadu.convert(id, tiffFile, Conversion.LOSSY);
 
                             if (jp2File.length() > 0) {
                                 return uploadImage(jp2File, contentType, contentLength);
