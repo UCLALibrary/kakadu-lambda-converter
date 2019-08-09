@@ -41,8 +41,6 @@ variable "kakadu_timeout" {}
 
 variable "src_bucket_event" {}
 
-variable "monitoring_endpoint" {}
-
 variable "cloudwatch_iam_allowed_actions" {}
 
 variable "lambda_iam_allowed_actions" {}
