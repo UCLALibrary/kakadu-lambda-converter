@@ -1,4 +1,5 @@
 #!/bin/bash
+# Configured to use https://apps.terraform.io
 
 BACKEND_FILE="backend.hcl"
 TERRAFORM="/opt/terraform/bin/terraform"
