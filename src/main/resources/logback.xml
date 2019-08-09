@@ -12,6 +12,7 @@
   <logger name="org.apache.http.headers" level="WARN" />
   <logger name="org.apache.http.impl" level="WARN" />
   <logger name="org.apache.http.client" level="WARN" />
+  <logger name="org.apache.http.conn.ssl.SSLConnectionSocketFactory" level="WARN" />
   <logger name="com.amazonaws.auth" level="WARN" />
   <logger name="com.amazonaws.http" level="WARN" />
   <logger name="com.amazonaws.internal" level="WARN" />

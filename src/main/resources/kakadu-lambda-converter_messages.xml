@@ -8,9 +8,9 @@
   <entry key="LKC-000">{}</entry>
   <entry key="LKC-001">Received S3 event: {}</entry>
   <entry key="LKC-002">New S3 object received: {}/{} [{}]</entry>
-  <entry key="LKC-003">Error getting object '{}' from bucket '{}' -- check that object exists and bucket is in same region
-    as this function</entry>
-  <entry key="LKC-004">Retrieved object's metadata says it is {} bytes long and it is {} bytes long</entry>
+  <entry key="LKC-003">Error getting object '{}' from bucket '{}' (check that object exists and that bucket is in the
+    same region as this lambda function)</entry>
+  <entry key="LKC-004">Retrieved object's metadata says it is {} bytes long; it is {} bytes long</entry>
   <entry key="LKC-005">Byte array is {} bytes long</entry>
   <entry key="LKC-006">Failed to convert TIFF to JP2: {}</entry>
   <entry key="LKC-007">File doesn't exist and can't be written: {}</entry>
@@ -21,4 +21,8 @@
   <entry key="LKC-112">Kakadu output: {}</entry>
   <entry key="LKC-113">Unable to clean up Lambda function's temporary file: {}</entry>
   <entry key="LKC-114">Writing temporary TIFF file in Lambda function: {}</entry>
+  <entry key="LKC-115">Unable to deliver update to JP2 conversion monitoring service: {} -&gt; {}</entry>
+  <entry key="LKC-116">Unable to create a temporary source file: {}</entry>
+  <entry key="LKC-117">Successfully reported image conversion to monitoring endpoint: {}</entry>
+  <entry key="LKC-118">Unable to report successful image conversion to monitoring endpoint: {}</entry>
 </properties>

@@ -47,6 +47,9 @@
     <force.destroy.jp2.bucket>false</force.destroy.jp2.bucket>
     <kakadu.lib.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.lib.layer.versioned.arn>
     <kakadu.bin.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.bin.layer.versioned.arn>
+    <!-- Three things are sent to monitor: job name, image ID, and success; add curly braces to path for each -->
+    <monitoring.endpoint>https://webhook.site/94998452-e729-48b7-a315-9d5aedffe648/{}/{}/{}</monitoring.endpoint>
+    
     <!-- Versions of project dependencies -->
     <freelib.utils.version>0.8.10</freelib.utils.version>
     <lambda.logging.version>1.0.0</lambda.logging.version>
@@ -55,11 +58,14 @@
     <aws.sdk.version>1.11.534</aws.sdk.version>
     <jackson.version>2.9.9</jackson.version>
     <jackson.databind.version>2.9.9.3</jackson.databind.version>
+    
     <!-- Versions of test dependencies -->
     <mockito.version>2.27.0</mockito.version>
+    
     <!-- Versions of plug-ins -->
     <shade.plugin.version>3.0.0</shade.plugin.version>
     <codacy.plugin.version>1.0.2</codacy.plugin.version>
+    
     <!-- Build configuration properties -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -111,6 +117,7 @@
       <artifactId>aws-java-sdk-lambda</artifactId>
       <version>${aws.sdk.version}</version>
     </dependency>
+    
     <!-- Test dependencies -->
     <dependency>
       <groupId>junit</groupId>

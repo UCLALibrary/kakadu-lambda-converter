@@ -16,3 +16,6 @@ terraform/.terraform
 # we keep Checkstyle and PMD so they can be picked up by Codacy
 src/main/tools/travis
 src/main/tools/eclipse
+
+# Ignore generated code
+src/main/generated
