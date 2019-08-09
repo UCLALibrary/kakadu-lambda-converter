@@ -3,8 +3,8 @@
 
 BACKEND_FILE="backend.hcl"
 TERRAFORM="/opt/terraform/bin/terraform"
-PLAN_FILE="current.plan"
-LOCAL_SECRETS="local.secrets"
+PLAN_FILE="plan.out"
+LOCAL_SECRETS="../target/classes/terraform.tfvars"
 WORKSPACE="lambda"
 
 if [[ ! -f ${BACKEND_FILE} ]];
