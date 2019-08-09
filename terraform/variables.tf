@@ -12,6 +12,8 @@ variable "kakadu_lib_layer" {}
 
 variable "kakadu_bin_layer" {}
 
+variable "monitoring_endpoint" {}
+
 variable "cred_profile" {}
 
 variable "project_artifactId" {}

@@ -86,6 +86,7 @@ resource "aws_lambda_function" "kakadu_converter" {
   environment {
     variables = {
       DESTINATION_BUCKET = "${var.jp2_bucket_name}"
+      MONITORING_ENDPOINT = "${var.monitoring_endpoint}"
     }
   }
 }

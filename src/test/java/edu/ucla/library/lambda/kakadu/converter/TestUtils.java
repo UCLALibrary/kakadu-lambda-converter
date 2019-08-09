@@ -24,35 +24,40 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 /**
  * Helper utilities for testing Lambda functions.
  */
-public class TestUtils {
+public final class TestUtils {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final String GMT = "GMT";
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     static {
-        mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
-        mapper.registerModule(new TestJacksonMapperModule());
+        MAPPER.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+        MAPPER.registerModule(new TestJacksonMapperModule());
     }
 
-    private static final DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTime().withZone(
-            new FixedDateTimeZone("GMT", "GMT", 0, 0));
+    private static final DateTimeFormatter DT_FORMATTER = ISODateTimeFormat.dateTime().withZone(new FixedDateTimeZone(
+            GMT, GMT, 0, 0));
+
+    private TestUtils() {
+    }
 
     /**
      * Helper method that parses a JSON object from a resource on the classpath as an instance of the provided type.
      *
-     * @param resource the path to the resource (relative to this class)
-     * @param clazz the type to parse the JSON into
+     * @param aResource the path to the resource (relative to this class)
+     * @param aClass the type to parse the JSON into
      */
-    public static <T> T parse(String resource, Class<T> clazz) throws IOException {
-        final InputStream stream = TestUtils.class.getResourceAsStream(resource);
+    public static <T> T parse(final String aResource, final Class<T> aClass) throws IOException {
+        final InputStream stream = TestUtils.class.getResourceAsStream(aResource);
 
         try {
-            if (clazz == S3Event.class) {
+            if (aClass == S3Event.class) {
                 final String json = IOUtils.toString(stream);
                 final S3EventNotification event = S3EventNotification.parseJson(json);
 
                 return (T) new S3Event(event.getRecords());
             } else {
-                return mapper.readValue(stream, clazz);
+                return MAPPER.readValue(stream, aClass);
             }
         } finally {
             stream.close();
@@ -63,7 +68,7 @@ public class TestUtils {
 
         private static final long serialVersionUID = 1L;
 
-        public TestJacksonMapperModule() {
+        TestJacksonMapperModule() {
             super("TestJacksonMapperModule");
 
             super.addSerializer(DateTime.class, new DateTimeSerializer());
@@ -74,18 +79,19 @@ public class TestUtils {
     private static class DateTimeSerializer extends JsonSerializer<DateTime> {
 
         @Override
-        public void serialize(DateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-
-            gen.writeString(dateTimeFormatter.print(value));
+        public void serialize(final DateTime aDateTime, final JsonGenerator aGenerator,
+                final SerializerProvider aProvider) throws IOException {
+            aGenerator.writeString(DT_FORMATTER.print(aDateTime));
         }
     }
 
     private static class DateTimeDeserializer extends JsonDeserializer<DateTime> {
 
         @Override
-        public DateTime deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-
-            return dateTimeFormatter.parseDateTime(parser.getText());
+        public DateTime deserialize(final JsonParser aParser, final DeserializationContext aContext)
+                throws IOException {
+            return DT_FORMATTER.parseDateTime(aParser.getText());
         }
     }
+
 }
