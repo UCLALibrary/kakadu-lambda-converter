@@ -100,8 +100,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
         final String key = aEvent.getRecords().get(0).getS3().getObject().getKey();
         final S3Object s3Object = myS3Client.getObject(new GetObjectRequest(bucket, key));
         final ObjectMetadata s3Metadata = s3Object.getObjectMetadata();
-        final String jobNameMetadata = s3Metadata.getUserMetaDataOf(Constants.JOB_NAME);
-        final Optional<String> jobName = Optional.ofNullable(jobNameMetadata);
+        final Optional<String> jobName = Optional.ofNullable(s3Metadata.getUserMetaDataOf(Constants.JOB_NAME));
 
         LOGGER.info(MessageCodes.LKC_002, bucket, key, s3Metadata.getContentType());
 

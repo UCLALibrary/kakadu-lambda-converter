@@ -16,7 +16,7 @@ public final class Constants {
     public static final String ID = "id";
 
     /** The conversion job name */
-    public static final String JOB_NAME = "job";
+    public static final String JOB_NAME = "jobName";
 
     /** The name of the environmental variable for the destination bucket */
     public static final String DESTINATION_BUCKET = "DESTINATION_BUCKET";

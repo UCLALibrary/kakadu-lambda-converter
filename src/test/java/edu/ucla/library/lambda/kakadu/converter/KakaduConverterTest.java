@@ -42,6 +42,8 @@ public class KakaduConverterTest {
 
     private static final String CONTENT_TYPE = "image/tif";
 
+    private static final String TEST_IMAGES_DIR = "src/test/resources/images/";
+
     private S3Event myEvent;
 
     private File myJP2File;
@@ -58,12 +60,18 @@ public class KakaduConverterTest {
     @Captor
     private ArgumentCaptor<GetObjectRequest> myGetObjectRequest;
 
+    /**
+     * Sets up the testing environment.
+     *
+     * @throws IOException If there is an I/O error while setting up the environment
+     * @throws InterruptedException If there is a resource error while setting up the environment
+     */
     @Before
     public void setUp() throws IOException, InterruptedException {
         myEvent = TestUtils.parse("/s3-event.put.json", S3Event.class);
 
-        final File jp2FileSource = new File("src/test/resources/images/" + JP2_FILE_NAME);
-        final File testTiff = new File("src/test/resources/images/" + TIFF_FILE_NAME);
+        final File jp2FileSource = new File(TEST_IMAGES_DIR + JP2_FILE_NAME);
+        final File testTiff = new File(TEST_IMAGES_DIR + TIFF_FILE_NAME);
         final FileInputStream fileStream = new FileInputStream(testTiff);
         final S3ObjectInputStream inputStream = new S3ObjectInputStream(fileStream, new HttpGet());
         final ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -90,6 +98,9 @@ public class KakaduConverterTest {
         return context;
     }
 
+    /**
+     * Tests the KakaduConverter.
+     */
     @Test
     public void testKakaduConverter() {
         final KakaduConverter handler = new KakaduConverter(myS3Client, myKakadu);
@@ -99,4 +110,5 @@ public class KakaduConverterTest {
         assertTrue(handler.handleRequest(myEvent, context));
         assertFalse(myJP2File.exists());
     }
+
 }
