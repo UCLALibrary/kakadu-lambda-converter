@@ -50,8 +50,8 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
 
     /**
      * Endpoint where something that monitors this process lives. It's expected to receive PATCH updates and to have
-     * have three variable slots as a part of its URL: e.g., https://path.to.somewhere/{}/{}/{}. The job name, image
-     * id, and boolean success (e.g., true or false).
+     * three variable slots as a part of its URL: e.g., https://path.to.somewhere/{}/{}/{}. The job name, image id,
+     * and boolean success (e.g., true or false).
      */
     private final Optional<String> myMonitoringEndpoint;
 
