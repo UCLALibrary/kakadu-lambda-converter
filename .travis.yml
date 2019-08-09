@@ -3,17 +3,15 @@ jdk: openjdk8
 dist: xenial
 
 # Overridden because parent project uses maven.test.skip instead of skipTests
-install: mvn install -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -B -V
+install:
+  - mvn package -q -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
   - mvn package
   - mvn org.jacoco:jacoco-maven-plugin:prepare-agent org.jacoco:jacoco-maven-plugin:report
 
 after_success:
-  - >
-    mvn com.gavinmogan:codacy-maven-plugin:coverage \
-      -DcoverageReportFile=target/site/jacoco/jacoco.xml \
-      -DprojectToken="${PROJECT_TOKEN}" -DapiToken="${API_TOKEN}"
+  - mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml
 
 cache:
   directories:

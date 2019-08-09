@@ -23,6 +23,7 @@ variable "jp2_bucket_region" {}
 variable "force_destroy_jp2_bucket" {
   default = "false"
 }
+variable "monitoring_endpoint" {}
 
 variable "project_artifactId" {}
 

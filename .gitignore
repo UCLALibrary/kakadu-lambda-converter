@@ -11,6 +11,7 @@ terraform/terraform.tfstate.backup
 
 # Terraform's configuration directory
 terraform/.terraform
+terraform/backend.hcl
 
 # Ignore project build tools which are generated on each build;
 # we keep Checkstyle and PMD so they can be picked up by Codacy

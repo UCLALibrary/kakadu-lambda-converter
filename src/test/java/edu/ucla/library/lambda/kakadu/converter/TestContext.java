@@ -42,8 +42,13 @@ public class TestContext implements Context {
         return myAWSRequestId;
     }
 
-    public void setAwsRequestId(String aValue) {
-        myAWSRequestId = aValue;
+    /**
+     * Sets AWS request ID
+     *
+     * @param aAWSRequestId An AWS request ID
+     */
+    public void setAwsRequestId(final String aAWSRequestId) {
+        myAWSRequestId = aAWSRequestId;
     }
 
     @Override
@@ -51,8 +56,13 @@ public class TestContext implements Context {
         return myClientContext;
     }
 
-    public void setClientContext(ClientContext aValue) {
-        myClientContext = aValue;
+    /**
+     * Sets client context.
+     *
+     * @param aClientContext A client context
+     */
+    public void setClientContext(final ClientContext aClientContext) {
+        myClientContext = aClientContext;
     }
 
     @Override
@@ -60,8 +70,13 @@ public class TestContext implements Context {
         return myFunctionName;
     }
 
-    public void setFunctionName(String aValue) {
-        myFunctionName = aValue;
+    /**
+     * Sets functional name.
+     *
+     * @param aFunctionalName A functional name
+     */
+    public void setFunctionName(final String aFunctionalName) {
+        myFunctionName = aFunctionalName;
     }
 
     @Override
@@ -69,8 +84,13 @@ public class TestContext implements Context {
         return myIdentity;
     }
 
-    public void setIdentity(CognitoIdentity aValue) {
-        myIdentity = aValue;
+    /**
+     * Sets identity.
+     *
+     * @param aCognitoIdentity A cognito identity
+     */
+    public void setIdentity(final CognitoIdentity aCognitoIdentity) {
+        myIdentity = aCognitoIdentity;
     }
 
     @Override
@@ -78,8 +98,13 @@ public class TestContext implements Context {
         return myLogGroupName;
     }
 
-    public void setLogGroupName(String aValue) {
-        myLogGroupName = aValue;
+    /**
+     * Sets log group name.
+     *
+     * @param aLogGroupName A log group name
+     */
+    public void setLogGroupName(final String aLogGroupName) {
+        myLogGroupName = aLogGroupName;
     }
 
     @Override
@@ -87,8 +112,13 @@ public class TestContext implements Context {
         return myLogStreamName;
     }
 
-    public void setLogStreamName(String aValue) {
-        myLogStreamName = aValue;
+    /**
+     * Sets log stream name.
+     *
+     * @param aLogStreamName A log stream name
+     */
+    public void setLogStreamName(final String aLogStreamName) {
+        myLogStreamName = aLogStreamName;
     }
 
     @Override
@@ -96,43 +126,88 @@ public class TestContext implements Context {
         return myLogger;
     }
 
-    public void setLogger(LambdaLogger aValue) {
-        myLogger = aValue;
+    /**
+     * Sets the lambda logger.
+     *
+     * @param aLogger A lambda logger
+     */
+    public void setLogger(final LambdaLogger aLogger) {
+        myLogger = aLogger;
     }
 
+    /**
+     * Gets the memory limit in megabytes.
+     *
+     * @return The memory limit in megabytes
+     */
     @Override
     public int getMemoryLimitInMB() {
         return myMemoryLimitInMB;
     }
 
-    public void setMemoryLimitInMB(int aValue) {
-        myMemoryLimitInMB = aValue;
+    /**
+     * Sets memory limit in megabytes.
+     *
+     * @param aMemLimitInMB A memory limit in megabytes
+     */
+    public void setMemoryLimitInMB(final int aMemLimitInMB) {
+        myMemoryLimitInMB = aMemLimitInMB;
     }
 
+    /**
+     * Gets remaining time in milliseconds.
+     *
+     * @return A remaining time in milliseconds
+     */
     @Override
     public int getRemainingTimeInMillis() {
         return myRemainingTimeInMillis;
     }
 
-    public void setRemainingTimeInMillis(int aValue) {
-        myRemainingTimeInMillis = aValue;
+    /**
+     * Sets remaining time in milliseconds.
+     *
+     * @param aTimeInMillis A milliseconds value
+     */
+    public void setRemainingTimeInMillis(final int aTimeInMillis) {
+        myRemainingTimeInMillis = aTimeInMillis;
     }
 
+    /**
+     * Gets functional version.
+     *
+     * @return A functional version
+     */
     @Override
     public String getFunctionVersion() {
         return myFunctionVersion;
     }
 
-    public void setFunctionVersion(String aValue) {
-        myFunctionVersion = aValue;
+    /**
+     * Sets functional version.
+     *
+     * @param aVersion A version
+     */
+    public void setFunctionVersion(final String aVersion) {
+        myFunctionVersion = aVersion;
     }
 
+    /**
+     * Gets invoked functional ARN.
+     *
+     * @return invoked functional ARN
+     */
     @Override
     public String getInvokedFunctionArn() {
         return myInvokedFunctionArn;
     }
 
-    public void setInvokedFunctionArn(String aValue) {
+    /**
+     * Sets invoked functional ARN.
+     *
+     * @param aValue An ARN value
+     */
+    public void setInvokedFunctionArn(final String aValue) {
         myInvokedFunctionArn = aValue;
     }
 
@@ -144,12 +219,12 @@ public class TestContext implements Context {
         private static final Logger LOGGER = LoggerFactory.getLogger(TestLogger.class, Constants.MESSAGES);
 
         @Override
-        public void log(String aMessage) {
+        public void log(final String aMessage) {
             LOGGER.info(aMessage);
         }
 
         @Override
-        public void log(byte[] aMessage) {
+        public void log(final byte[] aMessage) {
             LOGGER.info(MessageCodes.LKC_005, aMessage.length);
         }
     }
