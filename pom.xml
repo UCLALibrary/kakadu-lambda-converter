@@ -41,12 +41,13 @@
     <!-- These are the variables that can be set for the deployment/testing -->
     <lambda.region>us-east-1</lambda.region>
     <lambda.cred.profile>kakadu-converter</lambda.cred.profile>
-    <src.s3.bucket>kakadu-converter-tiffs</src.s3.bucket>
+    <src.s3.bucket>SUPPLY-SOURCEBUCKET-NAME</src.s3.bucket>
     <force.destroy.src.bucket>false</force.destroy.src.bucket>
-    <jp2.s3.bucket>kakadu-converter-jp2s</jp2.s3.bucket>
+    <jp2.s3.bucket>SUPPLY-JP2BUCKET-NAME</jp2.s3.bucket>
     <force.destroy.jp2.bucket>false</force.destroy.jp2.bucket>
     <kakadu.lib.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.lib.layer.versioned.arn>
     <kakadu.bin.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.bin.layer.versioned.arn>
+    <src.bucket.notification.filter.suffix>.tif</src.bucket.notification.filter.suffix>
     <!-- Versions of project dependencies -->
     <freelib.utils.version>0.8.10</freelib.utils.version>
     <lambda.logging.version>1.0.0</lambda.logging.version>

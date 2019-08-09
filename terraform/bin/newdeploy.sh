@@ -5,7 +5,7 @@ BACKEND_FILE="backend.hcl"
 TERRAFORM="/opt/terraform/bin/terraform"
 PLAN_FILE="current.plan"
 LOCAL_SECRETS="local.secrets"
-WORKSPACE="prod"
+WORKSPACE="lambda"
 
 if [[ ! -f ${BACKEND_FILE} ]];
 then
