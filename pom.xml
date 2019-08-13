@@ -40,6 +40,9 @@
   <properties>
     <!-- These are the variables that can be set for the deployment/testing -->
     <!-- for the SUPPLY fields, please specify a unique name as terraform will create resources with the specified name-->
+    <terraform.workspace.prefix>yourusername</terraform.workspace.prefix>
+    <terraform.organization.name>Organization</terraform.organization.name>
+    <terraform.user.token>SUPPLY-YOUR-OWN</terraform.user.token>
     <lambda.region>us-east-1</lambda.region>
     <lambda.cred.profile>kakadu-converter</lambda.cred.profile>
     <lambda.function.name>SUPPLY-LAMBDA-FUNCTION-NAME</lambda.function.name>
