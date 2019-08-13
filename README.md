@@ -3,6 +3,7 @@
 The kakadu-lambda-converter function reads TIFFs from an S3 bucket, converts them into JP2s using Kakadu, and then pushes the JP2s into a different S3 bucket. Since kakadu is proprietary software, you will need a license from Kakadu Software. If you have that license, you can use the [kakadu-lambda-layer](https://github.com/UCLALibrary/kakadu-lambda-layer) to make kakadu available to your AWS Lambda functions. The kakadu-lambda-layer is a prerequisite for this project.
 
 ### Required Attributes Needed
+In order to deploy successfully, you'll need the following criteria:
 * Terraform Enterprise(Free/Paid) Account
   * Create an organization or use your own account name as your organization
 * Terraform Enterprise(Free Tier) Token
@@ -16,6 +17,10 @@ The kakadu-lambda-converter function reads TIFFs from an S3 bucket, converts the
       ```Fgdsgkj29gbxMw.atlasv1.gdslkgjdlsljlkjl32l590gdsljlk10909dslj5l1209gdsgjdslkgjJyf4bJhXyeSE```
   * lambda.function.name
       ```joebruin-lambda-converter```
+  * lambda.region
+      ```us-east-1```
+  * lambda.cred_profile
+      ```converter-profile```
   * src.s3.bucket
       ```joebruin-src-bucket```
   * jp2.s3.bucket
