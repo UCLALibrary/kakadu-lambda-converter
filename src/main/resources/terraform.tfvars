@@ -29,5 +29,6 @@ project_version                       = "${project.version}"
 kakadu_handler                        = "edu.ucla.library.lambda.kakadu.converter.KakaduConverter"
 kakadu_runtime                        = "java8"
 kakadu_timeout                        = "600"
+kakadu_memory_size                    = "1024"
 monitoring_endpoint                   = "${monitoring.endpoint}"
 
