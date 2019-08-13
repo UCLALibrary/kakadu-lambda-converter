@@ -7,9 +7,9 @@ The kakadu-lambda-converter function reads TIFFs from an S3 bucket, converts the
   * Create an organization or use your own account name as your organization
 * Terraform Enterprise(Free Tier) Token
   * Generate a user token from: https://app.terraform.io/app/settings/tokens
-* Required POM override values
+* Required POM override values (Examples shown)
   * terraform.workspace.prefix
-    * Example: joebruin
+    joebruin
   * terraform.organization.name
     * Example: ExampleCom
   * terraform.user.token
