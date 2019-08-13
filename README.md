@@ -10,7 +10,7 @@ The kakadu-lambda-converter function reads TIFFs from an S3 bucket, converts the
 * Required POM override values (Examples shown)
   * terraform.workspace.prefix
 
-      joebruin
+      ```joebruin```
 
   * terraform.organization.name
     * Example: ExampleCom
