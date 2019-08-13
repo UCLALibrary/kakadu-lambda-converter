@@ -1,0 +1,10 @@
+### Workspaces is optional ###
+# Documentation found here: https://www.terraform.io/docs/backends/types/remote.html
+workspaces {
+  prefix = "username-"
+}
+
+hostname = "app.terraform.io"
+organization = "yourorg"
+token = "yourtoken"
+
