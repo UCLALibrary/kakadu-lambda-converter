@@ -2,6 +2,29 @@
 
 The kakadu-lambda-converter function reads TIFFs from an S3 bucket, converts them into JP2s using Kakadu, and then pushes the JP2s into a different S3 bucket. Since kakadu is proprietary software, you will need a license from Kakadu Software. If you have that license, you can use the [kakadu-lambda-layer](https://github.com/UCLALibrary/kakadu-lambda-layer) to make kakadu available to your AWS Lambda functions. The kakadu-lambda-layer is a prerequisite for this project.
 
+### Required Attributes Needed
+* Terraform Enterprise(Free/Paid) Account
+  * Create an organization or use your own account name as your organization
+* Terraform Enterprise(Free Tier) Token
+  * Generate a user token from: https://app.terraform.io/app/settings/tokens
+* Required POM override values
+  * terraform.workspace.prefix
+    * Example: joebruin
+  * terraform.organization.name
+    * Example: ExampleCom
+  * terraform.user.token
+    * Example: Fgdsgkj29gbxMw.atlasv1.gdslkgjdlsljlkjl32l590gdsljlk10909dslj5l1209gdsgjdslkgjJyf4bJhXyeSE
+  * lambda.function.name
+    * Example: joebruin-lambda-converter
+  * src.s3.bucket
+    * Example: joebruin-src-bucket
+  * jp2.s3.bucket
+    * Example: joebruin-output-bucket
+  * kakadu.lib.layer.versioned.arn
+    * Example: arn:aws:lambda:us-west-2:0123456789:layer:img2lambda-sha256-d89d9gd987239879gdsgdsg469a2735b7539c89b03c9821284ad3fc6e20aa502:1
+  * kakadu.bin.layer.versioned.arn
+    * Example: arn:aws:lambda:us-west-2:0123456789:layer:img2lambda-sha256-d89d9gd987239879gdsgdsg469a2735b7539c89b03c9821284ad3fc6e20aa502:1
+
 ### Building the project
 
 The kakadu-lambda-converter function can be built using the standard Maven mechanism:
@@ -17,11 +40,11 @@ The `lambda.cred.profile`, in case it's not clear, refers to an AWS profile defi
 In order to run the Lambda function, several AWS resources need to be created. We've provided a simple Terraform configuration to do this. The credentials needed to create these resources need to be available in your `~/.aws/credentials` file. Once you have the necessary credentials available, you can run Terraform with the following steps:
 
     cd terraform
-    bin/deploy.sh
+    bin/run
 
 This will create all the AWS resources that you need and upload the Lambda function contained in the Maven built Jar file. You can also clean up all these resource by using a bin script from the same `terraform` directory:
 
-    bin/destroy.sh
+    bin/run destroy
 
 If you want to see what Terraform is going to do before it actually creates the resources, run the following before running `bin/deploy.sh`:
 
