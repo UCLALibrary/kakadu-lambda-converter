@@ -17,5 +17,5 @@ Running `bin/app-terraform-deploy.sh` will initlaize terraform and create a work
 ### Destroying your Terraform resources integrated with app.terraform.io
 
 This will deploy all resources stored in the remote statefile you have instantiated from backend.hcl
-    bin/app-terraform-deploy.sh
+    bin/app-terraform-deploy.sh destroy
 
