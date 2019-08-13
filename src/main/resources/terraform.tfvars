@@ -21,6 +21,7 @@ cloudwatch_iam_allowed_actions        = ["logs:CreateLogGroup","logs:CreateLogSt
 lambda_iam_allowed_actions            = ["s3:*"]
 
 #### Kakada Lambda
+function_name                         = "${lambda.function.name}"
 kakadu_bin_layer                      = "${kakadu.bin.layer.versioned.arn}"
 kakadu_lib_layer                      = "${kakadu.lib.layer.versioned.arn}"
 project_artifactId                    = "${project.artifactId}"

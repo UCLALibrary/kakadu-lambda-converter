@@ -39,8 +39,10 @@
 
   <properties>
     <!-- These are the variables that can be set for the deployment/testing -->
+    <!-- for the SUPPLY fields, please specify a unique name as terraform will create resources with the specified name-->
     <lambda.region>us-east-1</lambda.region>
     <lambda.cred.profile>kakadu-converter</lambda.cred.profile>
+    <lambda.function.name>SUPPLY-LAMBDA-FUNCTION-NAME</lambda.function.name>
     <src.s3.bucket>SUPPLY-SOURCEBUCKET-NAME</src.s3.bucket>
     <force.destroy.src.bucket>false</force.destroy.src.bucket>
     <jp2.s3.bucket>SUPPLY-JP2BUCKET-NAME</jp2.s3.bucket>
