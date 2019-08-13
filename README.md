@@ -8,22 +8,25 @@ The kakadu-lambda-converter function reads TIFFs from an S3 bucket, converts the
 * Terraform Enterprise(Free Tier) Token
   * Generate a user token from: https://app.terraform.io/app/settings/tokens
 * Required POM override values (Examples shown)
-  * terraform.workspace.prefix
+  * terraform.workspace.prefix:
       ```joebruin```
-  * terraform.organization.name
-    * Example: ExampleCom
+  * terraform.organization.name:
+      ```examplecom```
   * terraform.user.token
-    * Example: Fgdsgkj29gbxMw.atlasv1.gdslkgjdlsljlkjl32l590gdsljlk10909dslj5l1209gdsgjdslkgjJyf4bJhXyeSE
+      ```Fgdsgkj29gbxMw.atlasv1.gdslkgjdlsljlkjl32l590gdsljlk10909dslj5l1209gdsgjdslkgjJyf4bJhXyeSE```
   * lambda.function.name
-    * Example: joebruin-lambda-converter
+      ```joebruin-lambda-converter```
   * src.s3.bucket
-    * Example: joebruin-src-bucket
+      ```joebruin-src-bucket```
   * jp2.s3.bucket
-    * Example: joebruin-output-bucket
+      ```joebruin-output-bucket```
   * kakadu.lib.layer.versioned.arn
-    * Example: arn:aws:lambda:us-west-2:0123456789:layer:img2lambda-sha256-d89d9gd987239879gdsgdsg469a2735b7539c89b03c9821284ad3fc6e20aa502:1
+
+      ```arn:aws:lambda:us-west-2:0123456789:layer:img2lambda-sha256-d89d9gd987239879gdsgdsg469a2735b7539c89b03c9821284ad3fc6e20aa502:1```
+
   * kakadu.bin.layer.versioned.arn
-    * Example: arn:aws:lambda:us-west-2:0123456789:layer:img2lambda-sha256-d89d9gd987239879gdsgdsg469a2735b7539c89b03c9821284ad3fc6e20aa502:1
+
+      ```arn:aws:lambda:us-west-2:0123456789:layer:img2lambda-sha256-d89d9gd987239879gdsgdsg469a2735b7539c89b03c9821284ad3fc6e20aa502:1```
 
 ### Building the project
 
