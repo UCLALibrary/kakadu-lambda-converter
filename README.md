@@ -93,15 +93,7 @@ If you want to see what Terraform is going to do before it actually creates the 
 
     bin/check_plan
 
-That's it! That will install your Lambda function for you. But what if you want to make changes to the code and then redeploy the function?
-
-### Incremental deployments
-
-If you want to push out changes to the Lambda function without changing all the other resources that have been created in the AWS space, you can use Maven to do a new build and push of the resulting Jar artifact. Do do this, just run the following from the project root:
-
-    mvn package aws:deployLambda
-
-This will push a newly built version of the function to AWS Lambda and trigger a rebuild and refresh of the service that the Lambda function provides.
+That's it! That will install your Lambda function for you.
 
 ### Contact
 
