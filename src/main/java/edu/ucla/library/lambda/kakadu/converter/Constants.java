@@ -13,10 +13,10 @@ public final class Constants {
     public static final String MESSAGES = "kakadu-lambda-converter_messages";
 
     /** The image ID */
-    public static final String ID = "id";
+    public static final String ID = "image-id";
 
     /** The conversion job name */
-    public static final String JOB_NAME = "jobName";
+    public static final String JOB_NAME = "job-name";
 
     /** The name of the environmental variable for the destination bucket */
     public static final String DESTINATION_BUCKET = "DESTINATION_BUCKET";

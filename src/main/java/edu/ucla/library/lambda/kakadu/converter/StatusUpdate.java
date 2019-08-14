@@ -1,6 +1,7 @@
 
 package edu.ucla.library.lambda.kakadu.converter;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import info.freelibrary.util.StringUtils;
@@ -35,7 +36,7 @@ public class StatusUpdate {
      * @param aImageId The image ID whose status is being updated
      */
     public StatusUpdate(final Optional<String> aJobName, final String aImageId) {
-        this(Optional.empty(), aImageId, false);
+        this(aJobName, aImageId, false);
     }
 
     /**
@@ -70,6 +71,7 @@ public class StatusUpdate {
      * @return The status update
      */
     public StatusUpdate setJobName(final String aJobName) {
+        Objects.requireNonNull(aJobName);
         myJobName = aJobName;
         return this;
     }

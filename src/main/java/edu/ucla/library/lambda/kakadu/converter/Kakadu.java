@@ -62,7 +62,8 @@ public class Kakadu {
      */
     public File convert(final String aID, final File aTIFF, final Conversion aConversion) throws IOException,
             InterruptedException {
-        final File jp2 = new File(TMP_DIR, URLEncoder.encode(aID, StandardCharsets.UTF_8.toString()) + JP2_EXT);
+        final String id = aID.contains("/") ? URLEncoder.encode(aID, StandardCharsets.UTF_8.toString()) : aID;
+        final File jp2 = new File(TMP_DIR, id + JP2_EXT);
         final List<String> command = new ArrayList<>();
         final String conversion = aConversion.name();
 
