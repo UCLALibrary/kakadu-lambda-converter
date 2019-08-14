@@ -45,7 +45,7 @@
     <terraform.user.token>SUPPLY-YOUR-OWN</terraform.user.token>
     <lambda.region>us-east-1</lambda.region>
     <lambda.cred.profile>kakadu-converter</lambda.cred.profile>
-    <lambda.function.name>SUPPLY-LAMBDA-FUNCTION-NAME</lambda.function.name>
+    <lambda.function.name>${terraform.workspace.prefix}-KakaduConverter</lambda.function.name>
     <src.s3.bucket>SUPPLY-SOURCEBUCKET-NAME</src.s3.bucket>
     <force.destroy.src.bucket>false</force.destroy.src.bucket>
     <jp2.s3.bucket>SUPPLY-JP2BUCKET-NAME</jp2.s3.bucket>
