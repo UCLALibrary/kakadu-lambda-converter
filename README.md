@@ -52,17 +52,23 @@ You will also need to override some default properties that are specified in the
       ```arn:aws:lambda:us-west-2:0123456789:layer:img2lambda-sha256-d89d9gd987239879gdsgdsg469a2735b7539c89b03c9821284ad3fc6e20aa502:1```
 
 * Optional POM override values (Examples shown)
-  * lambda.function.name (there is a default value that works for single use cases, but it can be overridden if you want to deploy more than one kakadu-lambda-converter in the same AWS region).
+  * lambda.function.name
   
       ```joebruin-lambda-converter-two```
 
-  * force.destroy.src.bucket (if you want to wipe the S3 source bucket and all its contents)
+    There is a default value that works for single use cases, but it can be overridden if you want to deploy more than one kakadu-lambda-converter in the same AWS region.
+
+  * force.destroy.src.bucket
   
       ```true```
 
-  * force.destroy.jp2.bucket (if you want to wipe the S3 target bucket and all its contents)
+    Setting to true will wipe the S3 source bucket and all its contents.
+
+  * force.destroy.jp2.bucket
 
       ```true```
+
+    Setting to true will wipe the S3 target bucket and all its contents.
 
 ### Building the project
 
