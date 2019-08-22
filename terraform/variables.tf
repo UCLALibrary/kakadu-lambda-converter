@@ -55,6 +55,6 @@ locals {
     MONITORING_ENDPOINT = "${var.monitoring_endpoint}"
   }
 
-  lambda_iam_allowed_resources = ["${module.tiff_src_bucket.bucket_arn}", "${module.output_jp2_bucket.bucket_arn}"]
+  lambda_iam_allowed_resources = ["${module.tiff_src_bucket.bucket_arn}*", "${module.output_jp2_bucket.bucket_arn}*"]
 }
 
