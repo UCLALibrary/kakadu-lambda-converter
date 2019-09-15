@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import org.apache.http.client.ClientProtocolException;
@@ -110,6 +114,13 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
         // Else, use the file name without path minus its extension as ID
         if (id == null) {
             id = FileUtils.stripExt(new File(key).getName());
+        }
+
+        // URL encode the ID so we can use it as a file name and in our status update URL
+        try {
+            id = URLEncoder.encode(id, StandardCharsets.UTF_8.toString());
+        } catch (final UnsupportedEncodingException details) {
+            throw new info.freelibrary.util.UnsupportedEncodingException(details);
         }
 
         if (myKakadu.isInstalled()) {
@@ -247,31 +258,35 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
     }
 
     private boolean uploadImage(final File aJP2File, final String aContentType, final long aContentLength) {
-        final String jp2Bucket = System.getenv(Constants.DESTINATION_BUCKET);
-        final String jp2Key = aJP2File.getName();
-        final PutObjectRequest request = new PutObjectRequest(jp2Bucket, jp2Key, aJP2File);
-        final ObjectMetadata metadata = new ObjectMetadata();
-
-        // Set the metadata that S3 wants for uploads
-        metadata.setContentType(aContentType);
-        metadata.setContentLength(aContentLength);
-        request.setMetadata(metadata);
-
         try {
-            myS3Client.putObject(request);
+            final String jp2Bucket = System.getenv(Constants.DESTINATION_BUCKET);
+            final String jp2Key = URLDecoder.decode(aJP2File.getName(), StandardCharsets.UTF_8.toString());
+            final PutObjectRequest request = new PutObjectRequest(jp2Bucket, jp2Key, aJP2File);
+            final ObjectMetadata metadata = new ObjectMetadata();
 
-            LOGGER.info(MessageCodes.LKC_008, FileUtils.stripExt(jp2Key), jp2Bucket, jp2Key);
-            return Boolean.TRUE;
-        } catch (final AmazonServiceException details) {
-            LOGGER.error(details, details.getMessage());
-            return Boolean.FALSE;
-        } catch (final SdkClientException details) {
-            LOGGER.error(details, details.getMessage());
-            return Boolean.FALSE;
-        } finally {
-            if (!FileUtils.delete(aJP2File)) {
-                LOGGER.error(MessageCodes.LKC_113, aJP2File);
+            // Set the metadata that S3 wants for uploads
+            metadata.setContentType(aContentType);
+            metadata.setContentLength(aContentLength);
+            request.setMetadata(metadata);
+
+            try {
+                myS3Client.putObject(request);
+
+                LOGGER.info(MessageCodes.LKC_008, FileUtils.stripExt(jp2Key), jp2Bucket, jp2Key);
+                return Boolean.TRUE;
+            } catch (final AmazonServiceException details) {
+                LOGGER.error(details, details.getMessage());
+                return Boolean.FALSE;
+            } catch (final SdkClientException details) {
+                LOGGER.error(details, details.getMessage());
+                return Boolean.FALSE;
+            } finally {
+                if (!FileUtils.delete(aJP2File)) {
+                    LOGGER.error(MessageCodes.LKC_113, aJP2File);
+                }
             }
+        } catch (final UnsupportedEncodingException details) {
+            throw new info.freelibrary.util.UnsupportedEncodingException(details);
         }
     }
 
