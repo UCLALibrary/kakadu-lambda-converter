@@ -63,7 +63,7 @@
     <lambda.core.version>1.2.0</lambda.core.version>
     <aws.sdk.version>1.11.534</aws.sdk.version>
     <jackson.version>2.9.9</jackson.version>
-    <jackson.databind.version>2.9.9.3</jackson.databind.version>
+    <jackson.databind.version>2.10.0.pr1</jackson.databind.version>
     
     <!-- Versions of test dependencies -->
     <mockito.version>2.27.0</mockito.version>
