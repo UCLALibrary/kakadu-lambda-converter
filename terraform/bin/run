@@ -26,6 +26,7 @@ fi
 # This init ensures that the workspace created/selected has instantiated the necessary terraform providers
 terraform init
 
+# Workspace gets its prefix from BACKEND_FILE, but you won't see the prefix in the output from this command
 echo "Working in workspace: $(terraform workspace show)"
 
 if [[ -f "${LOCAL_SECRETS}" ]];
