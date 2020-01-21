@@ -9,6 +9,10 @@ final public class MessageCodes {
 	 */
 	public static final String LKC_009 = "LKC-009";
 	/**
+	 * Message: Supplied compression rate is not a float value: {}
+	 */
+	public static final String LKC_119 = "LKC-119";
+	/**
 	 * Message: Error getting object '{}' from bucket '{}' (check that object exists and that bucket is in the
 	    same region as this lambda function)
 	 */

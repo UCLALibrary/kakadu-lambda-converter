@@ -42,11 +42,13 @@ public class Kakadu {
             "Cprecincts={256,256},{256,256},{128,128}", "Stiles={512,512}", "Corder=RPCL", "ORGgen_plt=yes",
             "ORGtparts=R", "Cblk={64,64}", "Cuse_sop=yes", "Cuse_eph=yes", "-flush_period", "1024");
 
-    @SuppressWarnings({ "checkstyle:multiplestringliterals" })
-    private static final List<String> LOSSLESS_OPTIONS = Arrays.asList("Creversible=yes", "-rate", "-");
+    private static final String LOSSLESS_RATE = "-";
 
     @SuppressWarnings({ "checkstyle:multiplestringliterals" })
-    private static final List<String> LOSSY_OPTION = Arrays.asList("-rate", "3");
+    private static final List<String> LOSSLESS_OPTIONS = Arrays.asList("Creversible=yes", "-rate", LOSSLESS_RATE);
+
+    @SuppressWarnings({ "checkstyle:multiplestringliterals" })
+    private static final List<String> LOSSY_OPTIONS = Arrays.asList("-rate");
 
     // private static final List<String> ALPHA_OPTION = Arrays.asList("-jp2_alpha");
 
@@ -55,25 +57,35 @@ public class Kakadu {
      *
      * @param aID An ID for the image to be converted
      * @param aTIFF A TIFF image to be converted
-     * @param aConversion A type of conversion (e.g. lossy, lossless)
+     * @param aCompressionRate A type of conversion (e.g. lossy, lossless)
      * @return The JP2 file
      * @throws IOException If there is trouble reading the source image or writing the JP2
      * @throws InterruptedException If the process gets interrupted
+     * @throws IllegalArgumentException If the compression rate isn't dash or a float
      */
-    public File convert(final String aID, final File aTIFF, final Conversion aConversion) throws IOException,
-            InterruptedException {
+    public File convert(final String aID, final File aTIFF, final String aCompressionRate) throws IOException,
+            InterruptedException, IllegalArgumentException {
         final String id = aID.contains("/") ? URLEncoder.encode(aID, StandardCharsets.UTF_8.toString()) : aID;
         final File jp2 = new File(TMP_DIR, id + JP2_EXT);
         final List<String> command = new ArrayList<>();
-        final String conversion = aConversion.name();
 
         command.addAll(Arrays.asList(KAKADU_COMMAND, "-i", getPath(aTIFF), "-o", getPath(jp2)));
         command.addAll(BASE_OPTIONS);
 
-        if (conversion.equals(Conversion.LOSSLESS.name())) {
+        if (aCompressionRate.equals(LOSSLESS_RATE)) {
             command.addAll(LOSSLESS_OPTIONS);
-        } else if (conversion.equals(Conversion.LOSSY.name())) {
-            command.addAll(LOSSY_OPTION);
+        } else {
+            final List<String> options = new ArrayList<>(LOSSY_OPTIONS);
+
+            // Confirm our lossy compression rate value is a float
+            try {
+                Float.parseFloat(aCompressionRate);
+                options.add(aCompressionRate);
+            } catch (final NumberFormatException details) {
+                throw new IllegalArgumentException(LOGGER.getMessage(MessageCodes.LKC_119, aCompressionRate));
+            }
+
+            command.addAll(options);
         }
 
         // Run the TIFF -> JP2 conversion
@@ -102,6 +114,7 @@ public class Kakadu {
      *
      * @param aFile An image file
      * @return The path of the supplied image file
+     * @throws IOException If there is trouble checking the file
      */
     public String getPath(final File aFile) throws IOException {
         if (!aFile.exists() && !aFile.getParentFile().canWrite()) {

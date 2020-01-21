@@ -45,6 +45,8 @@ variable "cloudwatch_iam_allowed_actions" {}
 
 variable "lambda_iam_allowed_actions" {}
 
+variable "kakadu_compression_rate" {}
+
 #### These locals expression are set to help with interpolation after initializing variables####
 locals {
   artifact_path = "../target/${var.project_artifactId}-${var.project_version}.jar"
@@ -53,6 +55,7 @@ locals {
   environment_variables = {
     DESTINATION_BUCKET  = "${var.jp2_bucket_name}"
     MONITORING_ENDPOINT = "${var.monitoring_endpoint}"
+    KAKADU_COMPRESSION_RATE = "${var.kakadu_compression_rate}"
   }
 
   lambda_iam_allowed_resources = ["${module.tiff_src_bucket.bucket_arn}*", "${module.output_jp2_bucket.bucket_arn}*"]

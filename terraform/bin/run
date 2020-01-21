@@ -14,7 +14,7 @@ then
 fi
 
 # This init makes sure that terraform is reading the latest backend.hcl configuration
-terraform init -backend-config=${BACKEND_FILE}
+terraform init -backend-config=${BACKEND_FILE} -lock=false
 
 if [[ -z $(terraform workspace list | grep -i ${WORKSPACE}) ]];
 then
@@ -32,7 +32,7 @@ if [[ -f "${LOCAL_SECRETS}" ]];
 then
   if [[ $1 == "destroy" ]];
   then
-    terraform destroy -var-file="${LOCAL_SECRETS}"
+    terraform destroy -var-file="${LOCAL_SECRETS}" -lock=false
   else
     terraform plan -out ${PLAN_FILE} -var-file="${LOCAL_SECRETS}" 
     terraform apply -auto-approve ${PLAN_FILE}
