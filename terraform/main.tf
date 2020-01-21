@@ -5,6 +5,11 @@ terraform {
 provider "aws" {
   profile = "${var.cred_profile}"
   region  = "${var.region}"
+  version = "~> 2.45"
+}
+
+provider "template" {
+  version = "~> 2.1"
 }
 
 module "tiff_src_bucket" {
