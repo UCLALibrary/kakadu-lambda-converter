@@ -57,7 +57,8 @@
     <monitoring.endpoint>https://webhook.site/94998452-e729-48b7-a315-9d5aedffe648/{}/{}/{}</monitoring.endpoint>
 
     <!-- Versions of project dependencies -->
-    <freelib.utils.version>0.8.10</freelib.utils.version>
+    <freelib.utils.version>1.0.2</freelib.utils.version>
+    <freelib.maven.version>0.0.3</freelib.maven.version>
     <lambda.logging.version>1.0.0</lambda.logging.version>
     <lambda.events.version>2.2.7</lambda.events.version>
     <lambda.core.version>1.2.0</lambda.core.version>
@@ -195,8 +196,8 @@
       </plugin>
       <plugin>
         <groupId>info.freelibrary</groupId>
-        <artifactId>freelib-utils</artifactId>
-        <version>${freelib.utils.version}</version>
+        <artifactId>freelib-maven-plugins</artifactId>
+        <version>${freelib.maven.version}</version>
         <executions>
           <execution>
             <phase>process-resources</phase>
