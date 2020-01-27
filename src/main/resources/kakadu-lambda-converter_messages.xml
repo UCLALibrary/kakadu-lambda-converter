@@ -25,5 +25,5 @@
   <entry key="LKC-116">Unable to create a temporary source file: {}</entry>
   <entry key="LKC-117">Successfully reported image conversion to monitoring endpoint: {}</entry>
   <entry key="LKC-118">Unable to report successful image conversion to monitoring endpoint: {}</entry>
-  <entry key="LKC-119">Supplied compression rate is not a float value: {}</entry>
+  <entry key="LKC-119">Supplied compression rate is not a positive float value: {}</entry>
 </properties>

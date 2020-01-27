@@ -77,10 +77,13 @@ public class Kakadu {
         } else {
             final List<String> options = new ArrayList<>(LOSSY_OPTIONS);
 
-            // Confirm our lossy compression rate value is a float
+            // Confirm our lossy compression rate value is a positive float
             try {
-                Float.parseFloat(aCompressionRate);
-                options.add(aCompressionRate);
+                if (Float.parseFloat(aCompressionRate) > 0F) {
+                    options.add(aCompressionRate);
+                } else {
+                    throw new IllegalArgumentException(LOGGER.getMessage(MessageCodes.LKC_119, aCompressionRate));
+                }
             } catch (final NumberFormatException details) {
                 throw new IllegalArgumentException(LOGGER.getMessage(MessageCodes.LKC_119, aCompressionRate));
             }
