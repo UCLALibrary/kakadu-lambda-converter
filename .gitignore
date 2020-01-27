@@ -17,3 +17,6 @@ terraform/backend.hcl
 # we keep Checkstyle and PMD so they can be picked up by Codacy
 src/main/tools/travis
 src/main/tools/eclipse
+
+# Ignore the generated MessageCodes file
+src/main/generated/**

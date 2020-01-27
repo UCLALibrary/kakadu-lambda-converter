@@ -54,7 +54,7 @@ public class StatusUpdateTest {
     }
 
     /**
-     * Test for StatusUpdate(Optional<String>, String, Boolean)
+     * Test for StatusUpdate(Optional&lt;String&gt;, String, Boolean)
      */
     @Test
     public final void testStatusUpdateOptionalOfStringStringBoolean() {
@@ -63,7 +63,7 @@ public class StatusUpdateTest {
     }
 
     /**
-     * Test for StatusUpdate(Optional<String>, String, Boolean)
+     * Test for StatusUpdate(Optional&lt;String&gt;, String, Boolean)
      */
     @Test
     public final void testStatusUpdateEmptyOptionalOfStringStringBoolean() {

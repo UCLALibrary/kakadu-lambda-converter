@@ -46,6 +46,7 @@ public final class TestUtils {
      *
      * @param aResource the path to the resource (relative to this class)
      * @param aClass the type to parse the JSON into
+     * @throws IOException If there is trouble getting the resource as a stream
      */
     public static <T> T parse(final String aResource, final Class<T> aClass) throws IOException {
         final InputStream stream = TestUtils.class.getResourceAsStream(aResource);

@@ -4,6 +4,7 @@ package edu.ucla.library.lambda.kakadu.converter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
@@ -86,8 +87,7 @@ public class KakaduConverterTest {
         when(myS3Object.getObjectMetadata()).thenReturn(objectMetadata);
         when(myKakadu.isInstalled()).thenReturn(true);
         when(myS3Client.getObject(myGetObjectRequest.capture())).thenReturn(myS3Object);
-        when(myKakadu.convert(any(String.class), ArgumentMatchers.any(File.class), any(Conversion.class))).thenReturn(
-                myJP2File);
+        when(myKakadu.convert(any(String.class), ArgumentMatchers.any(File.class), eq("3"))).thenReturn(myJP2File);
     }
 
     private Context createContext() {

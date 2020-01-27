@@ -6,6 +6,9 @@
 <!-- Checkstyle-Configuration: FreeLibrary Description: Checkstyle configuration for the FreeLibrary projects -->
 <module name="Checker">
   <property name="severity" value="warning" />
+  <module name="LineLength">
+    <property name="max" value="120" />
+  </module>
   <module name="TreeWalker">
     <module name="RedundantImport" />
     <module name="RedundantModifier" />
@@ -33,9 +36,6 @@
     <module name="EmptyCatchBlock">
       <property name="exceptionVariableName" value="expected" />
     </module>
-    <module name="LineLength">
-      <property name="max" value="120" />
-    </module>
     <module name="BooleanExpressionComplexity">
       <property name="max" value="4" />
     </module>
@@ -47,9 +47,7 @@
     </module>
     <module name="JavadocMethod">
       <property name="scope" value="public" />
-      <property name="allowUndeclaredRTE" value="true" />
       <property name="allowMissingParamTags" value="true" />
-      <property name="allowMissingThrowsTags" value="true" />
       <property name="allowMissingReturnTag" value="true" />
     </module>
     <module name="NeedBraces" />
@@ -85,7 +83,7 @@
     </module>
   </module>
   <module name="SuppressionFilter">
-    <property name="file" value="/Users/avuong/github-repos/kakadu-lambda-converter/src/main/tools/checkstyle/checkstyle-suppressions.xml" />
+    <property name="file" value="/home/kevin/Workspace/kakadu-lambda-converter/src/main/tools/checkstyle/checkstyle-suppressions.xml" />
   </module>
   <module name="FileTabCharacter">
     <property name="eachLine" value="true" />

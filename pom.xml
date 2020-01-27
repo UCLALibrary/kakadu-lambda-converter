@@ -4,7 +4,7 @@
 
   <groupId>edu.ucla.library</groupId>
   <artifactId>kakadu-lambda-converter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <name>Kakadu Lambda Converter</name>
   <description>A AWS Lambda function that converts TIFFs to JP2s using Kakadu</description>
 
@@ -57,13 +57,14 @@
     <monitoring.endpoint>https://webhook.site/94998452-e729-48b7-a315-9d5aedffe648/{}/{}/{}</monitoring.endpoint>
 
     <!-- Versions of project dependencies -->
-    <freelib.utils.version>0.8.10</freelib.utils.version>
+    <freelib.utils.version>1.0.2</freelib.utils.version>
+    <freelib.maven.version>0.0.3</freelib.maven.version>
     <lambda.logging.version>1.0.0</lambda.logging.version>
-    <lambda.events.version>2.2.6</lambda.events.version>
+    <lambda.events.version>2.2.7</lambda.events.version>
     <lambda.core.version>1.2.0</lambda.core.version>
-    <aws.sdk.version>1.11.534</aws.sdk.version>
-    <jackson.version>2.10.0</jackson.version>
-    <jackson.databind.version>2.10.0</jackson.databind.version>
+    <aws.sdk.version>1.11.712</aws.sdk.version>
+    <jackson.version>2.10.2</jackson.version>
+    <jackson.databind.version>2.10.2</jackson.databind.version>
 
     <!-- Versions of test dependencies -->
     <mockito.version>2.27.0</mockito.version>
@@ -90,6 +91,16 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-cbor</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
       <version>${jackson.version}</version>
     </dependency>
     <dependency>
@@ -147,10 +158,6 @@
     </resources>
     <plugins>
       <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -165,15 +172,18 @@
         <version>${shade.plugin.version}</version>
         <configuration>
           <createDependencyReducedPom>false</createDependencyReducedPom>
+          <filters>
+            <filter>
+              <artifact>*:*</artifact>
+              <excludes>
+                <exclude>module-info.class</exclude>
+              </excludes>
+            </filter>
+          </filters>
           <transformers>
             <transformer
               implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
           </transformers>
-          <artifactSet>
-            <excludes>
-              <exclude>com.fasterxml.jackson.core:*</exclude>
-            </excludes>
-          </artifactSet>
         </configuration>
         <executions>
           <execution>
@@ -186,8 +196,8 @@
       </plugin>
       <plugin>
         <groupId>info.freelibrary</groupId>
-        <artifactId>freelib-utils</artifactId>
-        <version>${freelib.utils.version}</version>
+        <artifactId>freelib-maven-plugins</artifactId>
+        <version>${freelib.maven.version}</version>
         <executions>
           <execution>
             <phase>process-resources</phase>
@@ -276,7 +286,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>3.7.0</version>
+    <version>3.8.2</version>
   </parent>
 
 </project>

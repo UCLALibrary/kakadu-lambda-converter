@@ -7,6 +7,9 @@ BACKEND_FILE="${TERRAFORM_CLASS_PATH}/backend.hcl"
 LOCAL_SECRETS="${TERRAFORM_CLASS_PATH}/terraform.tfvars"
 WORKSPACE="lambda"
 
+# Change into the directory where our script is
+cd $(dirname $0)/..
+
 if [[ ! -f ${BACKEND_FILE} ]];
 then
   echo "${BACKEND_FILE} not found"
@@ -26,6 +29,7 @@ fi
 # This init ensures that the workspace created/selected has instantiated the necessary terraform providers
 terraform init
 
+# Workspace gets its prefix from BACKEND_FILE, but you won't see the prefix in the output from this command
 echo "Working in workspace: $(terraform workspace show)"
 
 if [[ -f "${LOCAL_SECRETS}" ]];
@@ -34,7 +38,7 @@ then
   then
     terraform destroy -var-file="${LOCAL_SECRETS}"
   else
-    terraform plan -out ${PLAN_FILE} -var-file="${LOCAL_SECRETS}" 
+    terraform plan -out ${PLAN_FILE} -var-file="${LOCAL_SECRETS}"
     terraform apply -auto-approve ${PLAN_FILE}
   fi
 else

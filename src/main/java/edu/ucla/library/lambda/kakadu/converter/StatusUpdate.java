@@ -55,7 +55,7 @@ public class StatusUpdate {
      * Creates a new status update.
      *
      * @param aJobName A job name associated with the update
-     * @param aImageId The image ID whose status is being updated
+     * @param aImageId The ID of the image whose status is being updated
      * @param aSuccess The status information
      */
     public StatusUpdate(final Optional<String> aJobName, final String aImageId, final boolean aSuccess) {

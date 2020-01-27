@@ -24,6 +24,9 @@ public final class Constants {
     /** The URL of the monitoring endpoint for this process */
     public static final String MONITORING_ENDPOINT = "MONITORING_ENDPOINT";
 
+    /** Kakadu rate */
+    public static final String KAKADU_COMPRESSION_RATE = "KAKADU_COMPRESSION_RATE";
+
     private Constants() {
     }
 }

@@ -49,6 +49,9 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
     /** A logger for our function */
     private static final Logger LOGGER = LoggerFactory.getLogger(KakaduConverter.class, Constants.MESSAGES);
 
+    /** A default compression rate */
+    private static final String DEFAULT_COMPRESSION_RATE = "3";
+
     /* A S3 client for the test to use */
     private AmazonS3 myS3Client = AmazonS3ClientBuilder.standard().build();
 
@@ -59,6 +62,9 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
      */
     private final Optional<String> myMonitoringEndpoint;
 
+    /* The Kakadu compression rate */
+    private final Optional<String> myCompressionRate;
+
     /* The kakadu image converter */
     private final Kakadu myKakadu;
 
@@ -67,12 +73,14 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
      */
     public KakaduConverter() {
         myMonitoringEndpoint = Optional.ofNullable(System.getenv(Constants.MONITORING_ENDPOINT));
+        myCompressionRate = Optional.ofNullable(System.getenv(Constants.KAKADU_COMPRESSION_RATE));
         myKakadu = new Kakadu();
     }
 
     // Test purpose only.
     KakaduConverter(final AmazonS3 aS3Client, final Kakadu aKakadu) {
         myMonitoringEndpoint = Optional.ofNullable(System.getenv(Constants.MONITORING_ENDPOINT));
+        myCompressionRate = Optional.ofNullable(System.getenv(Constants.KAKADU_COMPRESSION_RATE));
         myS3Client = aS3Client;
         myKakadu = aKakadu;
     }
@@ -172,7 +180,8 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                 }
 
                 try {
-                    final File jp2File = myKakadu.convert(id, aSourceFile, Conversion.LOSSY);
+                    final String rate = myCompressionRate.orElse(DEFAULT_COMPRESSION_RATE);
+                    final File jp2File = myKakadu.convert(id, aSourceFile, rate);
 
                     if (jp2File.length() > 0) {
                         if (uploadImage(jp2File, s3Metadata.getContentType(), contentLength)) {
@@ -187,7 +196,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                         notifyMonitorIfPresent(aStatusUpdate.setSuccess(false));
                         return Boolean.FALSE;
                     }
-                } catch (final IOException | InterruptedException details) {
+                } catch (final IOException | InterruptedException | IllegalArgumentException details) {
                     LOGGER.error(details, MessageCodes.LKC_111, aSourceFile);
                     notifyMonitorIfPresent(aStatusUpdate.setSuccess(false));
                     return Boolean.FALSE;
