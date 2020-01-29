@@ -150,6 +150,7 @@ public class KakaduConverter implements RequestHandler<S3Event, Boolean> {
                 return Boolean.FALSE;
             }
         } else {
+            LOGGER.error(MessageCodes.LKC_120);
             notifyMonitorIfPresent(new StatusUpdate(jobName, id, false));
             return Boolean.FALSE;
         }
