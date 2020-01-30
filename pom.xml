@@ -4,7 +4,7 @@
 
   <groupId>edu.ucla.library</groupId>
   <artifactId>kakadu-lambda-converter</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.1-SNAPSHOT</version>
   <name>Kakadu Lambda Converter</name>
   <description>A AWS Lambda function that converts TIFFs to JP2s using Kakadu</description>
 
@@ -50,8 +50,7 @@
     <force.destroy.src.bucket>false</force.destroy.src.bucket>
     <jp2.s3.bucket>SUPPLY-JP2BUCKET-NAME</jp2.s3.bucket>
     <force.destroy.jp2.bucket>false</force.destroy.jp2.bucket>
-    <kakadu.lib.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.lib.layer.versioned.arn>
-    <kakadu.bin.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.bin.layer.versioned.arn>
+    <kakadu.layer.versioned.arn>SUPPLY-YOUR-OWN</kakadu.layer.versioned.arn>
     <src.bucket.notification.filter.suffix>.tif</src.bucket.notification.filter.suffix>
     <!-- Three things are sent to monitor: job name, image ID, and success; add curly braces to path for each -->
     <monitoring.endpoint>https://webhook.site/94998452-e729-48b7-a315-9d5aedffe648/{}/{}/{}</monitoring.endpoint>

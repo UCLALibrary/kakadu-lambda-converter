@@ -22,8 +22,7 @@ lambda_iam_allowed_actions            = ["s3:*"]
 
 #### Kakada Lambda
 function_name                         = "${lambda.function.name}"
-kakadu_bin_layer                      = "${kakadu.bin.layer.versioned.arn}"
-kakadu_lib_layer                      = "${kakadu.lib.layer.versioned.arn}"
+kakadu_layer                          = "${kakadu.layer.versioned.arn}"
 project_artifactId                    = "${project.artifactId}"
 project_version                       = "${project.version}"
 kakadu_handler                        = "edu.ucla.library.lambda.kakadu.converter.KakaduConverter"

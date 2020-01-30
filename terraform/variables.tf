@@ -8,9 +8,7 @@ variable "src_bucket_region" {}
 
 variable "function_name" {}
 
-variable "kakadu_lib_layer" {}
-
-variable "kakadu_bin_layer" {}
+variable "kakadu_layer" {}
 
 variable "force_destroy_src_bucket" {
   default = "false"
@@ -50,7 +48,7 @@ variable "kakadu_compression_rate" {}
 #### These locals expression are set to help with interpolation after initializing variables####
 locals {
   artifact_path = "../target/${var.project_artifactId}-${var.project_version}.jar"
-  lambda_layers = ["${var.kakadu_bin_layer}", "${var.kakadu_lib_layer}"]
+  lambda_layers = [ "${var.kakadu_layer}" ]
 
   environment_variables = {
     DESTINATION_BUCKET  = "${var.jp2_bucket_name}"
