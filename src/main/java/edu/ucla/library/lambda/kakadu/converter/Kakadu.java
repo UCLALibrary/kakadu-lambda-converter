@@ -105,7 +105,28 @@ public class Kakadu {
      */
     public boolean isInstalled() {
         try {
-            return Runtime.getRuntime().exec("kdu_compress -v").waitFor() == 0;
+            final Process process = Runtime.getRuntime().exec("/opt/bin/kdu_compress -v");
+            final BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+            // Check to see if the process exited successfully or whether there is an error message
+            if (process.waitFor() == 0) {
+                return true;
+            } else {
+                final StringBuilder error = new StringBuilder();
+
+                String line;
+
+                // Read the error message and write it to our log
+                while ((line = errorReader.readLine()) != null) {
+                    error.append(line);
+                }
+
+                if (error.length() > 0) {
+                    LOGGER.error(error.toString());
+                }
+
+                return false;
+            }
         } catch (final InterruptedException | IOException details) {
             LOGGER.error(details, details.getMessage());
             return false;
